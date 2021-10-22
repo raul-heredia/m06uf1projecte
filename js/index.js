@@ -1,5 +1,6 @@
 window.onload = main;
 
 function main(){
-    console.log("It Works!");
+
+    console.log('It works!')
 }

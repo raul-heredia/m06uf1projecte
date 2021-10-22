@@ -33,8 +33,18 @@
             </ul>
         </div>
     </nav>
-    <canvas id="canvas"></canvas>
-</body>
+    <div id="container">
+        <div class="buttons">
+            <button onclick="color('black')" type="button" class="color-button" name="black"></button>
+            <button type="button" class="color-button" name="red"></button>
+            <button type="button" class="color-button" name="blue"></button>
+            <button type="button" class="color-button" name="green"></button>
+            <input type="color" id="color-picker" value="#ff0000">
+        </div>
+        <canvas id="canvas" width="900" height="500"></canvas>
+    </div>
+    </body>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
