@@ -54,23 +54,19 @@
                 <button type="button" value="#aeea00"></button>
                 <button type="button" value="#000000"></button>
                 <button type="button" value="#ffffff"></button>
-                <input type="color" id="colorPicker" value="#ff0000">
-
+                <input type="color" id="colorPicker" value="#fdffff">
             </div>
-            <div class="brushes">
-                <button type="button" value="1"></button>
-                <button type="button" value="2"></button>
-                <button type="button" value="3"></button>
-                <button type="button" value="4"></button>
-                <button type="button" value="5"></button>
+            <div class="lineWidth">
+                <label id="grosor">Grosor: 5</label>
+                <input type="range" min="1" max="20" value="5" id="width-slider">
             </div>
             <div class="buttons">
-                <button id="clear" type="button">Clear</button>
-                <button id="save" type="button">Save</button>
+                <button id="clear" type="button">Limpiar</button>
+                <button id="save" type="button">Guardar</button>
             </div>
         </div>
         <div class="right-block">
-            <canvas id="paint-canvas" width="640" height="400"></canvas>
+            <canvas id="paint-canvas" width="1370" height="600"></canvas>
         </div>
     </main>
 </body>

@@ -1,9 +1,5 @@
 /*NavBar*/
 
-* {
-    box-sizing: border-box;
-}
-
 .navbar {
     padding: 5px 5px 5px 25px;
     margin-bottom: 40px;
@@ -27,22 +23,24 @@
 /*Canvas*/
 
 main {
-    width: 800px;
-    border: 1px solid #e0e0e0;
+    width: 1536px;
+    border: 2px solid #000000;
     margin: 0 auto;
     display: flex;
     flex-grow: 1;
+    border-radius: 1em;
 }
 
 .panel {
     width: 160px;
-    border-right: 1px solid #e0e0e0;
+    border-right: 2px solid #b8b8b8;
 }
 
 .colors {
     background-color: #ece8e8;
+    border-top-left-radius: 1em;
     text-align: center;
-    padding-bottom: 5px;
+    padding-bottom: px;
     padding-top: 10px;
 }
 
@@ -61,7 +59,6 @@ main {
     display: inline-block;
     border: 1px solid #00000026;
     border-radius: 0;
-    outline: none;
     cursor: pointer;
     width: 40px;
     height: 20px;
@@ -140,17 +137,18 @@ main {
     background-color: #ffffff;
 }
 
-.brushes {
-    padding-top: 5px
+.lineWidth {
+    background-color: #ece8e8;
+    padding-top: 10px
 }
 
-.brushes button {
+#width-slider {
     display: block;
-    width: 100%;
+    width: 90%;
     border: 0;
     border-radius: 0;
     background-color: #ece8e8;
-    margin-bottom: 5px;
+    margin: 0 auto;
     padding: 5px;
     height: 30px;
     outline: none;
@@ -158,31 +156,8 @@ main {
     cursor: pointer;
 }
 
-.brushes button:after {
-    height: 1px;
-    display: block;
-    background: #808080;
-    content: '';
-}
-
-.brushes button:nth-of-type(1):after {
-    height: 1px;
-}
-
-.brushes button:nth-of-type(2):after {
-    height: 2px;
-}
-
-.brushes button:nth-of-type(3):after {
-    height: 3px;
-}
-
-.brushes button:nth-of-type(4):after {
-    height: 4px;
-}
-
-.brushes button:nth-of-type(5):after {
-    height: 5px;
+#grosor {
+    margin-left: 8px;
 }
 
 .buttons {
@@ -206,7 +181,7 @@ main {
 }
 
 .right-block {
-    width: 640px;
+    width: 1228px;
 }
 
 #paint-canvas {
