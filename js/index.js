@@ -2,6 +2,12 @@ window.onload = main;
 
 function main(){
 
+
+
+
+
+    // Colors
+    let drawColor = 'black';
     let colors = document.getElementsByClassName('colors')[0];
     let colorPicker = document.getElementById('colorPicker');
 
