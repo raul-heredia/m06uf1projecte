@@ -1,53 +1,214 @@
 /*NavBar*/
 
-.navbar{
-    padding: 5px 5px 5px 25px;
+* {
+    box-sizing: border-box;
 }
 
-.nav-link{
+.navbar {
+    padding: 5px 5px 5px 25px;
+    margin-bottom: 40px;
+}
+
+.nav-link {
     color: white !important;
     font-weight: 600;
     font-size: 20px;
 }
 
-.nav-link:hover{
+.nav-link:hover {
     color: #0288d1 !important;
     transition: 500ms;
 }
 
-#nav-active{
+#nav-active {
     color: #0288d1 !important;
 }
 
-
 /*Canvas*/
-#container{
-    border: 1px solid black;
-}
-#canvas{
-    margin: 50px;
-    width: 50%;
-    border: 1px solid black;
-    border-radius: 1em;
+
+main {
+    width: 800px;
+    border: 1px solid #e0e0e0;
+    margin: 0 auto;
+    display: flex;
+    flex-grow: 1;
 }
 
-.color-button{
-    width: 40px;
-    height: 40px;
-    border-radius: 100px;
+.panel {
+    width: 160px;
+    border-right: 1px solid #e0e0e0;
+}
+
+.colors {
+    background-color: #ece8e8;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 10px;
+}
+
+.colors button {
+    display: inline-block;
+    border: 1px solid #00000026;
+    border-radius: 0;
+    outline: none;
     cursor: pointer;
-    border: 3px solid black;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 5px
 }
 
-.color-button[name=black]{
-    background-color: black;
+.colors input[type="color"] {
+    display: inline-block;
+    border: 1px solid #00000026;
+    border-radius: 0;
+    outline: none;
+    cursor: pointer;
+    width: 40px;
+    height: 20px;
+    margin-bottom: 5px
 }
-.color-button[name=red]{
-    background-color: red;
+
+.colors button:nth-of-type(1) {
+    background-color: #d50000;
 }
-.color-button[name=blue]{
-    background-color: blue;
+
+.colors button:nth-of-type(2) {
+    background-color: #ff1744;
 }
-.color-button[name=green]{
-    background-color: green;
+
+.colors button:nth-of-type(3) {
+    background-color: #dd2c00;
+}
+
+.colors button:nth-of-type(4) {
+    background-color: #ff6d00;
+}
+
+.colors button:nth-of-type(5) {
+    background-color: #ffab00;
+}
+
+.colors button:nth-of-type(6) {
+    background-color: #ffd600;
+}
+
+.colors button:nth-of-type(7) {
+    background-color: #6200ea;
+}
+
+.colors button:nth-of-type(8) {
+    background-color: #651fff;
+}
+
+.colors button:nth-of-type(9) {
+    background-color: #304ffe;
+}
+
+.colors button:nth-of-type(10) {
+    background-color: #2962ff;
+}
+
+.colors button:nth-of-type(11) {
+    background-color: #0091ea;
+}
+
+.colors button:nth-of-type(12) {
+    background-color: #00b8d4;
+}
+
+.colors button:nth-of-type(13) {
+    background-color: #7cb342;
+}
+
+.colors button:nth-of-type(14) {
+    background-color: #00c853;
+}
+
+.colors button:nth-of-type(15) {
+    background-color: #64dd17;
+}
+
+.colors button:nth-of-type(16) {
+    background-color: #aeea00;
+}
+
+.colors button:nth-of-type(17) {
+    background-color: #000000;
+}
+
+.colors button:nth-of-type(18) {
+    background-color: #ffffff;
+}
+
+.brushes {
+    padding-top: 5px
+}
+
+.brushes button {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    background-color: #ece8e8;
+    margin-bottom: 5px;
+    padding: 5px;
+    height: 30px;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.brushes button:after {
+    height: 1px;
+    display: block;
+    background: #808080;
+    content: '';
+}
+
+.brushes button:nth-of-type(1):after {
+    height: 1px;
+}
+
+.brushes button:nth-of-type(2):after {
+    height: 2px;
+}
+
+.brushes button:nth-of-type(3):after {
+    height: 3px;
+}
+
+.brushes button:nth-of-type(4):after {
+    height: 4px;
+}
+
+.brushes button:nth-of-type(5):after {
+    height: 5px;
+}
+
+.buttons {
+    height: 80px;
+    padding-top: 10px;
+}
+
+.buttons button {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    background-color: #ece8e8;
+    margin-bottom: 5px;
+    padding: 5px;
+    height: 30px;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.right-block {
+    width: 640px;
+}
+
+#paint-canvas {
+    cursor: crosshair;
 }

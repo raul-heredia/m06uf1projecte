@@ -2,5 +2,18 @@ window.onload = main;
 
 function main(){
 
-    console.log('It works!')
+    let colors = document.getElementsByClassName('colors')[0];
+    let colorPicker = document.getElementById('colorPicker');
+
+
+    colors.addEventListener('click', colorValue, false);
+    colorPicker.addEventListener('change', colorPickerValue, false);
+
+    function colorValue(event){
+        console.log(event.target.value)
+    }
+    function colorPickerValue(event){
+        console.log(event.target.value)
+    }
+    
 }

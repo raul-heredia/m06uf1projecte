@@ -33,17 +33,47 @@
             </ul>
         </div>
     </nav>
-    <div id="container">
-        <div class="buttons">
-            <button onclick="color('black')" type="button" class="color-button" name="black"></button>
-            <button type="button" class="color-button" name="red"></button>
-            <button type="button" class="color-button" name="blue"></button>
-            <button type="button" class="color-button" name="green"></button>
-            <input type="color" id="color-picker" value="#ff0000">
+    <main>
+        <div class="panel">
+            <div class="colors">
+                <button type="button" value="#d50000"></button>
+                <button type="button" value="#ff1744"></button>
+                <button type="button" value="#dd2c00"></button>
+                <button type="button" value="#ff6d00"></button>
+                <button type="button" value="#ffab00"></button>
+                <button type="button" value="#ffd600"></button>
+                <button type="button" value="#6200ea"></button>
+                <button type="button" value="#651fff"></button>
+                <button type="button" value="#304ffe"></button>
+                <button type="button" value="#2962ff"></button>
+                <button type="button" value="#0091ea"></button>
+                <button type="button" value="#00b8d4"></button>
+                <button type="button" value="#2e7d32"></button>
+                <button type="button" value="#00c853"></button>
+                <button type="button" value="#64dd17"></button>
+                <button type="button" value="#aeea00"></button>
+                <button type="button" value="#000000"></button>
+                <button type="button" value="#ffffff"></button>
+                <input type="color" id="colorPicker" value="#ff0000">
+
+            </div>
+            <div class="brushes">
+                <button type="button" value="1"></button>
+                <button type="button" value="2"></button>
+                <button type="button" value="3"></button>
+                <button type="button" value="4"></button>
+                <button type="button" value="5"></button>
+            </div>
+            <div class="buttons">
+                <button id="clear" type="button">Clear</button>
+                <button id="save" type="button">Save</button>
+            </div>
         </div>
-        <canvas id="canvas" width="900" height="500"></canvas>
-    </div>
-    </body>
+        <div class="right-block">
+            <canvas id="paint-canvas" width="640" height="400"></canvas>
+        </div>
+    </main>
+</body>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
