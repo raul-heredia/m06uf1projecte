@@ -66,6 +66,9 @@ function main(){
         isDrawing = true; // Ponemos la variable isDrawing en true
         context.beginPath(); // Iniciamos una nueva ruta
         context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop); // Movemos el path a donde el usuario ha hecho clic
+        // Con lineto y stroke aquí nos aseguramos que solo haciendo clic, pintará un punto
+        context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop)
+        context.stroke();
     }
 
     function draw(event){
