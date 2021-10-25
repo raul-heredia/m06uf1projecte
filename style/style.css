@@ -24,29 +24,31 @@
 
 main {
     width: 1536px;
-    border: 2px solid #000000;
+    border: 2px solid #343a40;
     margin: 0 auto;
     display: flex;
     flex-grow: 1;
-    border-radius: 1em;
+    border-radius: 0.5em;
 }
 
 .panel {
     width: 160px;
-    border-right: 2px solid #b8b8b8;
+    border-right: 2px solid #5e6870;
+    background-color: #737e88;
+    border-top-left-radius: 0.5em;
 }
 
 .colors {
-    background-color: #ece8e8;
-    border-top-left-radius: 1em;
+    border-top-left-radius: 0.5em;
+    background-color: #737e88;
     text-align: center;
-    padding-bottom: px;
+    padding-bottom: 5px;
     padding-top: 10px;
 }
 
 .colors button {
     display: inline-block;
-    border: 1px solid #00000026;
+    border: 1px solid #000000;
     border-radius: 50px;
     outline: none;
     cursor: pointer;
@@ -57,7 +59,7 @@ main {
 
 .colors input[type="color"] {
     display: inline-block;
-    border: 1px solid #00000026;
+    border: 1px solid #000000;
     border-radius: 0;
     cursor: pointer;
     width: 40px;
@@ -138,7 +140,6 @@ main {
 }
 
 .lineWidth {
-    background-color: #ece8e8;
     padding-top: 10px
 }
 
@@ -167,10 +168,11 @@ main {
 
 .buttons button {
     display: block;
-    width: 100%;
+    width: 90%;
     border: 0;
     border-radius: 0;
     background-color: #ece8e8;
+    margin: 0 auto;
     margin-bottom: 5px;
     padding: 5px;
     height: 30px;
