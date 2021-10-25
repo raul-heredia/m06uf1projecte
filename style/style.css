@@ -178,8 +178,8 @@ margin: 5px;
 }
 
 .formas .activeButton{
-    background-color: black;
-    color: white;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
 }
 
 .buttons {

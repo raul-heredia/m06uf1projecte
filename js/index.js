@@ -24,7 +24,7 @@ function main(){
     
     //VARIABLES BOTONES FORMAS
     let formas = document.getElementsByClassName('formas')[0];
-    let isBrush = false;
+    let isBrush = true;
     let isRect = false;
     let isFillRect = false;
     let isRound = false;
