@@ -161,6 +161,27 @@ main {
     margin-left: 8px;
 }
 
+.formas{
+    padding: 10px 5px 10px 12px;
+    background-color: #737e88;
+    border-top-left-radius: 0.5em;
+    }
+    
+.formas button {
+display: inline-block;
+border: 2px solid #000000;
+outline: none;
+cursor: pointer;
+width: 30px;
+height: 30px;
+margin: 5px;
+}
+
+.formas .activeButton{
+    background-color: black;
+    color: white;
+}
+
 .buttons {
     height: 80px;
     padding-top: 10px;
@@ -189,3 +210,6 @@ main {
 #paint-canvas {
     cursor: crosshair;
 }
+
+
+
