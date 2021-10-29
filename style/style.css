@@ -168,13 +168,13 @@ main {
     }
     
 .formas button {
-display: inline-block;
-border: 2px solid #000000;
-outline: none;
-cursor: pointer;
-width: 30px;
-height: 30px;
-margin: 5px;
+    display: inline-block;
+    border: 2px solid #000000;
+    outline: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
 }
 
 .formas .activeButton{
@@ -185,6 +185,21 @@ margin: 5px;
 .buttons {
     height: 80px;
     padding-top: 10px;
+}
+
+.formas .hidden{
+    display: none;
+}
+
+.formas #textInput{
+    width: 90%;
+}
+.formas #romb i, .formas #fillRomb i{
+    transform:  rotateY(180deg) rotate(45deg);
+}
+
+.formas #textSlider{
+    width: 90%;
 }
 
 .buttons button {

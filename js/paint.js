@@ -1,7 +1,7 @@
 window.onload = main;
 
-function main(){
-    
+function main() {
+
     // ----------------------------------------- 
     // --------------- VARIABLES ---------------
     // -----------------------------------------
@@ -9,7 +9,7 @@ function main(){
     // VARIABLES CANVAS
     let canvas = document.getElementById("paint-canvas");
     let context = canvas.getContext("2d");
-    
+
     // VARIABLES COLORES
     let drawColor = 'black';
     let fillColor = 'black';
@@ -22,15 +22,12 @@ function main(){
     let widthLabel = document.getElementById('grosor');
     let paintWidth = 5;
 
-    
+
     //VARIABLES BOTONES FORMAS
     let formas = document.getElementsByClassName('formas')[0];
-    let isBrush = true;
-    let isRect = false;
-    let isFillRect = false;
-    let isRound = false;
-    let isFillRound = false;
-    let isText = false;
+    let isBrush = true, isRect = false, isFillRect = false, isRound = false,
+        isFillRound = false, isRomb = false, isFillRomb = false, isText = false,
+        isbold = false, isItalic = false;
 
     // VARIABLES DIBUJO
     context.strokeStyle = drawColor;
@@ -40,6 +37,11 @@ function main(){
 
     // VARIABLES FORMAS
     let xInic, yInic, xFin, yFin, rectWidth, rectHeight, roundRadius;
+
+    // VARIABLES TEXTO
+    let textSlider = document.getElementById('textSlider');
+    let textLabel = document.getElementById('labelSize');
+    let textSize = 18;
 
     // VARIABLES BOTÓN LIMPIAR
     let clearButton = document.getElementById('clear');
@@ -51,11 +53,11 @@ function main(){
     // ----------------------------------------- 
     // --------------- FUNCIONES ---------------
     // -----------------------------------------
-    
+
     // FUNCIONES COLOR
 
     // Nos da el value del color al picar en cada botón (Incluido color picker)
-    function colorValue(event){
+    function colorValue(event) {
         //console.log(drawColor);
         drawColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
         fillColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
@@ -63,7 +65,7 @@ function main(){
         context.fillStyle = fillColor;
     }
     // Nos devuelve el color de color picker cuando este ha sido cambiado
-    function colorPickerValue(event){
+    function colorPickerValue(event) {
         // console.log(drawColor);
         drawColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
         fillColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
@@ -73,20 +75,29 @@ function main(){
 
     // FUNCION GROSOR DE LINEA
 
-    function widthPicker(event){
+    function widthPicker(event) {
         //console.log(widthSlider.value); // Obtiene el valor del slider
         paintWidth = widthSlider.value; // Asigna el valor del slider a la variable paintWidth
         context.lineWidth = paintWidth; // Asigna que el tamaño de la linea es igual al que hemos guardado en la variable 
         widthLabel.innerHTML = `Grosor: ${widthSlider.value}` // Devolvemos el grosor actual en el label grosor
     }
 
-    function resetVars(){ // Reseteamos todas las variables
+    function textSizePicker(event) {
+        textSize = textSlider.value; // Asigna el valor del slider a la variable paintWidth
+        textLabel.innerHTML = `Tamaño Texto: ${textSlider.value}` // Devolvemos el grosor actual en el label grosor
+    }
+
+    function resetVars() { // Reseteamos todas las variables
         isBrush = false;
         isRect = false;
         isFillRect = false;
         isRound = false;
         isFillRound = false;
+        isRomb = false;
+        isFillRomb = false;
         isText = false;
+        isbold = false;
+        isItalic = false;
     }
 
     function resetActive() { // Eliminamos la clase de todos los botones (Aunque no existan)
@@ -95,20 +106,28 @@ function main(){
         document.getElementById('fillRect').classList.remove('activeButton');
         document.getElementById('round').classList.remove('activeButton');
         document.getElementById('fillRound').classList.remove('activeButton');
+        document.getElementById('romb').classList.remove('activeButton');
+        document.getElementById('fillRomb').classList.remove('activeButton');
         document.getElementById('text').classList.remove('activeButton');
-      }
+        document.getElementById('bold').classList.add('hidden');
+        document.getElementById('bold').classList.remove('activeButton');
+        document.getElementById('italic').classList.add('hidden');
+        document.getElementById('italic').classList.remove('activeButton');
+        document.getElementById('textSlider').classList.add('hidden');
+        document.getElementById('labelSize').classList.add('hidden');
+    }
 
-    function formasButton(event){
+    function formasButton(event) {
         let buttonClicked = event.target.value;
 
-        if(event.target.tagName == 'I' && event.target.parentNode.tagName == 'BUTTON'){
+        if (event.target.tagName == 'I' && event.target.parentNode.tagName == 'BUTTON') {
             buttonClicked = event.target.parentNode.value; // Nos aseguramos que clicando el icono no devuelva undefined
         }
-        switch (buttonClicked){
+        switch (buttonClicked) {
             case "1":
                 resetVars();
                 resetActive();
-                isBrush = true; 
+                isBrush = true;
                 document.getElementById('brush').classList.add('activeButton');
                 break;
             case "2":
@@ -138,14 +157,53 @@ function main(){
             case "6":
                 resetVars();
                 resetActive();
+                isRomb = true;
+                document.getElementById('romb').classList.add('activeButton');
+                break;
+            case "7":
+                resetVars();
+                resetActive();
+                isFillRomb = true;
+                document.getElementById('fillRomb').classList.add('activeButton');
+                break;
+            case "8":
+                resetVars();
+                resetActive();
                 isText = true;
                 document.getElementById('text').classList.add('activeButton');
+                document.getElementById('bold').classList.remove('hidden');
+                document.getElementById('italic').classList.remove('hidden');
+                document.getElementById('textSlider').classList.remove('hidden');
+                document.getElementById('labelSize').classList.remove('hidden');
+                break;
+            case "9":
+                if (!isbold) {
+                    document.getElementById('bold').classList.add('activeButton');
+                    isbold = true;
+                } else {
+                    document.getElementById('bold').classList.remove('activeButton');
+                    isbold = false;
+                }
+                break;
+            case "10":
+                if (!isItalic) {
+                    document.getElementById('italic').classList.add('activeButton');
+                    isItalic = true;
+                } else {
+                    document.getElementById('italic').classList.remove('activeButton');
+                    isItalic = false;
+                }
                 break;
         };
     }
 
-    function start(event){
-        if(isBrush){
+    function resetDegree() {
+        context.Restore(),
+            document.getElementById('rotar').classList.remove('activeButton');
+    }
+
+    function start(event) {
+        if (isBrush) {
             isDrawing = true; // Ponemos la variable isDrawing en true
             context.beginPath(); // Iniciamos una nueva ruta
             context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop); // Movemos el path a donde el usuario ha hecho clic
@@ -153,74 +211,84 @@ function main(){
             context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop)
             context.stroke();
         }
-        if(isRect || isFillRect || isRound || isFillRound){
+        if (isRect || isFillRect || isRound || isFillRound || isText) {
             isDrawing = true; // Ponemos la variable isDrawing en true
             xInic = event.clientX - canvas.offsetLeft;  // Guardamos el valor inicial de X
             yInic = event.clientY - canvas.offsetTop; // Guardamos el valor inicial de Y
             context.beginPath(); // Iniciamos una nueva ruta
-        }
-        }
 
-    function draw(event){
-        if(isDrawing && isBrush){ // Mientras isDrawing sea true (no soltar el clic) haremos una nueva linea que se moverá por done nos movamos con el cursor
+            if (isText) {
+                let mensaje = (prompt('Introduce tu mensaje'));
+
+                context.font = `${textSize}px Arial`;
+                context.fillText(mensaje, xInic, yInic);
+
+            }
+        }
+    }
+
+    function draw(event) {
+        if (isDrawing && isBrush) { // Mientras isDrawing sea true (no soltar el clic) haremos una nueva linea que se moverá por done nos movamos con el cursor
             context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop)
             context.stroke();
         }
     }
-    function stop(event){ 
-        if (isDrawing && isBrush){ // Si soltamos el raton y isDrawing es cierto, 
+    function stop(event) {
+        if (isDrawing && isBrush) { // Si soltamos el raton y isDrawing es cierto, 
             context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
             context.closePath(); // Acabamos la ruta
             isDrawing = false; // Declaramos isDrawing en false para decir que hemos acabado de dibujar
         }
-        if (isRect || isFillRect){
-            if (isDrawing){ // Si soltamos el raton y isDrawing es cierto, 
+        if (isRect || isFillRect) {
+            if (isDrawing) { // Si soltamos el raton y isDrawing es cierto, 
                 xFin = event.clientX - canvas.offsetLeft; // Guardamos el valor final de X
                 yFin = event.clientY - canvas.offsetTop;  // Guardamos el valor final de Y
                 rectWidth = xFin - xInic; // Calculamos el ancho del rectangulo restando xInic a xFin
                 rectHeight = yFin - yInic; // Calculamos el alto del rectangulo restando yInic a yFin
                 context.rect(xInic, yInic, rectWidth, rectHeight) // Hacemos el rectangulo
-                if(isFillRect){ // Si hemos hecho clic en el botón de rectangulo pintado hacemos un fill
+                if (isFillRect) { // Si hemos hecho clic en el botón de rectangulo pintado hacemos un fill
                     context.fill();
-                }else if(isRect){ // Si hemos hecho clic en el botón de rectangulo vacío hacemos un stroke
+                } else if (isRect) { // Si hemos hecho clic en el botón de rectangulo vacío hacemos un stroke
                     context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
                 }
                 context.closePath(); // Acabamos la ruta
                 isDrawing = false; // Declaramos isDrawing en false para decir que hemos acabado de dibujar
+                resetDegree();
             }
         }
-        
-        if (isRound || isFillRound){
-            if (isDrawing){ // Si soltamos el raton y isDrawing es cierto, 
-                xFin = event.clientX - canvas.offsetLeft; 
-                yFin = event.clientY - canvas.offsetTop; 
-                roundRadius = ((xFin + yFin) - (xInic + yInic))/2; // Calculamos el radio sumando los valores y dividiendo por 2
-                if(roundRadius < 0){ // Si el radio es menor a 0 lo multiplicamos por -1 para que sea positivo
+
+        if (isRound || isFillRound) {
+            if (isDrawing) { // Si soltamos el raton y isDrawing es cierto, 
+                xFin = event.clientX - canvas.offsetLeft;
+                yFin = event.clientY - canvas.offsetTop;
+                roundRadius = ((xFin + yFin) - (xInic + yInic)) / 2; // Calculamos el radio sumando los valores y dividiendo por 2
+                if (roundRadius < 0) { // Si el radio es menor a 0 lo multiplicamos por -1 para que sea positivo
                     roundRadius *= -1; // Multiplicamos para que se vuelva positivo
                     xFin += roundRadius; //Sumamos el radio a xFin para que aparezca en su lugar y no desplazado a un lado
                     context.arc(xFin, yFin, roundRadius, 0, 2 * Math.PI);
-                }else{
+                } else {
                     xInic += roundRadius; //Sumamos el radio a xInic para que aparezca en su lugar y no desplazado a un lado
                     context.arc(xInic, yInic, roundRadius, 0, 2 * Math.PI);
                 }
-                if(isRound){ // Si hemos seleccionado la redonda vacia hacemos un stroke
+                if (isRound) { // Si hemos seleccionado la redonda vacia hacemos un stroke
                     context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
-                }else if(isFillRound){ // Si hemos seleccionado la redonda pintada hacemos un fill
+                } else if (isFillRound) { // Si hemos seleccionado la redonda pintada hacemos un fill
                     context.fill();
                 }
                 context.closePath(); // Acabamos la ruta
                 isDrawing = false; // Ponemos isdrawing en false
+                resetDegree();
             }
         }
     }
 
     // FUNCION LIMPIAR CANVAS
-    function clear(){ // Hacemos un clear de todo el canvas
+    function clear() { // Hacemos un clear de todo el canvas
         context.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     // FUNCION GUARDAR CANVAS
-    function save(){
+    function save() {
         let imageName = prompt('Introduce el nombre de la imagen');
         let canvasDataURL = canvas.toDataURL(); // Devuelve una URL que contiene una imagen del dibujo
         let image = document.createElement('a'); // Crea un enlace
@@ -237,17 +305,19 @@ function main(){
     // Listener clic botones de colores y color picker
     colors.addEventListener('click', colorValue, false); // Cuando hacemos clic en los botones de colors ejecuta la funcion colorValue
     colorPicker.addEventListener('change', colorPickerValue, false); // Cuando el valor del input color cambie se ejecuta la funcion colorPickervalue
-    
+
     formas.addEventListener('click', formasButton, false); // 
 
     // LISTENER LINE WIDTH
     widthSlider.addEventListener('change', widthPicker, false); // Cuando cambia el valor del input range se ejecuta la funcion widthPicker
-    
+    // LISTENER TEXT SIZE
+    textSlider.addEventListener('change', textSizePicker, false); // Cuando cambia el valor del input range se ejecuta la funcion widthPicker
+
     // Listener dibujo
-        canvas.addEventListener('mousedown', start, false) // Cuando el ratón está abajo (Clic mantenido) ejecutamos la funcion start 
-        canvas.addEventListener('mousemove', draw, false) // Mientras movemos el ratón con el clic mantenido dibujamos
-        canvas.addEventListener('mouseup', stop, false) // Cuando soltamos el ratón para de dibujar
-        canvas.addEventListener('mouseout', stop, false) // Si el ratón sale fuera del canvas para de dibujar
+    canvas.addEventListener('mousedown', start, false) // Cuando el ratón está abajo (Clic mantenido) ejecutamos la funcion start 
+    canvas.addEventListener('mousemove', draw, false) // Mientras movemos el ratón con el clic mantenido dibujamos
+    canvas.addEventListener('mouseup', stop, false) // Cuando soltamos el ratón para de dibujar
+    canvas.addEventListener('mouseout', stop, false) // Si el ratón sale fuera del canvas para de dibujar
 
     // LISTENER BOTON LIMPIAR
     clearButton.addEventListener('click', clear, false) // Al hacer clic en el boton Limpiar se ejecuta la función clear
