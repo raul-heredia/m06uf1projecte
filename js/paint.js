@@ -155,8 +155,8 @@ function main(){
         }
         if(isRect || isFillRect || isRound || isFillRound){
             isDrawing = true; // Ponemos la variable isDrawing en true
-            xInic = event.clientX - canvas.offsetLeft; 
-            yInic = event.clientY - canvas.offsetTop;
+            xInic = event.clientX - canvas.offsetLeft;  // Guardamos el valor inicial de X
+            yInic = event.clientY - canvas.offsetTop; // Guardamos el valor inicial de Y
             context.beginPath(); // Iniciamos una nueva ruta
         }
         }
@@ -170,66 +170,48 @@ function main(){
     function stop(event){ 
         if (isDrawing && isBrush){ // Si soltamos el raton y isDrawing es cierto, 
             context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
-            context.closePath();
-            isDrawing = false;
+            context.closePath(); // Acabamos la ruta
+            isDrawing = false; // Declaramos isDrawing en false para decir que hemos acabado de dibujar
         }
-        if (isDrawing && isRect){ // Si soltamos el raton y isDrawing es cierto, 
-            xFin = event.clientX - canvas.offsetLeft; 
-            yFin = event.clientY - canvas.offsetTop; 
-            rectWidth = xFin - xInic;
-            rectHeight = yFin - yInic;
-            
-            context.rect(xInic, yInic, rectWidth, rectHeight)
-            context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
-            context.closePath();
-            isDrawing = false;
-        }
-        if (isDrawing && isFillRect){ // Si soltamos el raton y isDrawing es cierto, 
-            xFin = event.clientX - canvas.offsetLeft; 
-            yFin = event.clientY - canvas.offsetTop; 
-            rectWidth = xFin - xInic;
-            rectHeight = yFin - yInic;
-            
-            context.rect(xInic, yInic, rectWidth, rectHeight)
-            context.fill(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
-            context.closePath();
-            isDrawing = false;
-        }
-        if (isDrawing && isRound){ // Si soltamos el raton y isDrawing es cierto, 
-            xFin = event.clientX - canvas.offsetLeft; 
-            yFin = event.clientY - canvas.offsetTop; 
-            roundRadius = ((xFin + yFin) - (xInic + yInic))/2;
-            
-            xInic += ((xInic) / 2)
-            if(roundRadius < 0){
-                console.log("roundRadius Before: " + roundRadius);
-                roundRadius *= -1;
-                console.log("roundRadius After: " + roundRadius);
-                context.arc(xFin, yFin, roundRadius, 0, 2 * Math.PI);
-            }else{
-                context.arc(xInic, yInic, roundRadius, 0, 2 * Math.PI);
+        if (isRect || isFillRect){
+            if (isDrawing){ // Si soltamos el raton y isDrawing es cierto, 
+                xFin = event.clientX - canvas.offsetLeft; // Guardamos el valor final de X
+                yFin = event.clientY - canvas.offsetTop;  // Guardamos el valor final de Y
+                rectWidth = xFin - xInic; // Calculamos el ancho del rectangulo restando xInic a xFin
+                rectHeight = yFin - yInic; // Calculamos el alto del rectangulo restando yInic a yFin
+                context.rect(xInic, yInic, rectWidth, rectHeight) // Hacemos el rectangulo
+                if(isFillRect){ // Si hemos hecho clic en el botón de rectangulo pintado hacemos un fill
+                    context.fill();
+                }else if(isRect){ // Si hemos hecho clic en el botón de rectangulo vacío hacemos un stroke
+                    context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
+                }
+                context.closePath(); // Acabamos la ruta
+                isDrawing = false; // Declaramos isDrawing en false para decir que hemos acabado de dibujar
             }
-            context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
-            context.closePath();
-            isDrawing = false;
         }
-        if (isDrawing && isFillRound){ // Si soltamos el raton y isDrawing es cierto, 
-            xFin = event.clientX - canvas.offsetLeft; 
-            yFin = event.clientY - canvas.offsetTop; 
-            roundRadius = ((xFin + yFin) - (xInic + yInic))/2;
-            
-            xInic += ((xInic) / 2)
-            if(roundRadius < 0){
-                console.log("roundRadius Before: " + roundRadius);
-                roundRadius *= -1;
-                console.log("roundRadius After: " + roundRadius);
-                context.arc(xFin, yFin, roundRadius, 0, 2 * Math.PI);
-            }else{
-                context.arc(xInic, yInic, roundRadius, 0, 2 * Math.PI);
+        
+        if (isRound || isFillRound){
+            if (isDrawing){ // Si soltamos el raton y isDrawing es cierto, 
+                xFin = event.clientX - canvas.offsetLeft; 
+                yFin = event.clientY - canvas.offsetTop; 
+                roundRadius = ((xFin + yFin) - (xInic + yInic))/2; // Calculamos el radio sumando los valores y dividiendo por 2
+
+                if(roundRadius < 0){ // Si el radio es menor a 0 lo multiplicamos por -1 para que sea positivo
+                    roundRadius *= -1;
+                    //xFin += ((xFin) / 2);
+                    context.arc(xFin, yFin, roundRadius, 0, 2 * Math.PI);
+                }else{
+                    //xInic += ((xInic) / 2);
+                    context.arc(xInic, yFin, roundRadius, 0, 2 * Math.PI);
+                }
+                if(isRound){ // Si hemos seleccionado la redonda vacia hacemos un stroke
+                    context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
+                }else if(isFillRound){ // Si hemos seleccionado la redonda pintada hacemos un fill
+                    context.fill();
+                }
+                context.closePath(); // Acabamos la ruta
+                isDrawing = false; // Ponemos isdrawing en false
             }
-            context.fill(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
-            context.closePath();
-            isDrawing = false;
         }
     }
 
