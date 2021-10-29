@@ -12,6 +12,7 @@ function main(){
     
     // VARIABLES COLORES
     let drawColor = 'black';
+    let fillColor = 'black';
     let colors = document.getElementsByClassName('colors')[0];
     let colorPicker = document.getElementById('colorPicker');
 
@@ -37,6 +38,9 @@ function main(){
     let isDrawing = false;
     context.lineCap = 'round';
 
+    // VARIABLES FORMAS
+    let xInic, yInic, xFin, yFin, rectWidth, rectHeight, roundRadius;
+
     // VARIABLES BOTÓN LIMPIAR
     let clearButton = document.getElementById('clear');
 
@@ -54,13 +58,17 @@ function main(){
     function colorValue(event){
         //console.log(drawColor);
         drawColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
+        fillColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
         context.strokeStyle = drawColor; // Asignamos que el color es igual al color que hemos guardado en la varibale
+        context.fillStyle = fillColor;
     }
     // Nos devuelve el color de color picker cuando este ha sido cambiado
     function colorPickerValue(event){
         // console.log(drawColor);
         drawColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
+        fillColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
         context.strokeStyle = drawColor; // Asignamos que el color es igual al color que hemos guardado en la varibale
+        context.fillStyle = fillColor;
     }
 
     // FUNCION GROSOR DE LINEA
@@ -145,6 +153,12 @@ function main(){
             context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop)
             context.stroke();
         }
+        if(isRect || isFillRect || isRound || isFillRound){
+            isDrawing = true; // Ponemos la variable isDrawing en true
+            xInic = event.clientX - canvas.offsetLeft; 
+            yInic = event.clientY - canvas.offsetTop;
+            context.beginPath(); // Iniciamos una nueva ruta
+        }
         }
 
     function draw(event){
@@ -156,6 +170,64 @@ function main(){
     function stop(event){ 
         if (isDrawing && isBrush){ // Si soltamos el raton y isDrawing es cierto, 
             context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
+            context.closePath();
+            isDrawing = false;
+        }
+        if (isDrawing && isRect){ // Si soltamos el raton y isDrawing es cierto, 
+            xFin = event.clientX - canvas.offsetLeft; 
+            yFin = event.clientY - canvas.offsetTop; 
+            rectWidth = xFin - xInic;
+            rectHeight = yFin - yInic;
+            
+            context.rect(xInic, yInic, rectWidth, rectHeight)
+            context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
+            context.closePath();
+            isDrawing = false;
+        }
+        if (isDrawing && isFillRect){ // Si soltamos el raton y isDrawing es cierto, 
+            xFin = event.clientX - canvas.offsetLeft; 
+            yFin = event.clientY - canvas.offsetTop; 
+            rectWidth = xFin - xInic;
+            rectHeight = yFin - yInic;
+            
+            context.rect(xInic, yInic, rectWidth, rectHeight)
+            context.fill(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
+            context.closePath();
+            isDrawing = false;
+        }
+        if (isDrawing && isRound){ // Si soltamos el raton y isDrawing es cierto, 
+            xFin = event.clientX - canvas.offsetLeft; 
+            yFin = event.clientY - canvas.offsetTop; 
+            roundRadius = ((xFin + yFin) - (xInic + yInic))/2;
+            
+            xInic += ((xInic) / 2)
+            if(roundRadius < 0){
+                console.log("roundRadius Before: " + roundRadius);
+                roundRadius *= -1;
+                console.log("roundRadius After: " + roundRadius);
+                context.arc(xFin, yFin, roundRadius, 0, 2 * Math.PI);
+            }else{
+                context.arc(xInic, yInic, roundRadius, 0, 2 * Math.PI);
+            }
+            context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
+            context.closePath();
+            isDrawing = false;
+        }
+        if (isDrawing && isFillRound){ // Si soltamos el raton y isDrawing es cierto, 
+            xFin = event.clientX - canvas.offsetLeft; 
+            yFin = event.clientY - canvas.offsetTop; 
+            roundRadius = ((xFin + yFin) - (xInic + yInic))/2;
+            
+            xInic += ((xInic) / 2)
+            if(roundRadius < 0){
+                console.log("roundRadius Before: " + roundRadius);
+                roundRadius *= -1;
+                console.log("roundRadius After: " + roundRadius);
+                context.arc(xFin, yFin, roundRadius, 0, 2 * Math.PI);
+            }else{
+                context.arc(xInic, yInic, roundRadius, 0, 2 * Math.PI);
+            }
+            context.fill(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
             context.closePath();
             isDrawing = false;
         }
