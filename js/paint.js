@@ -195,14 +195,13 @@ function main(){
                 xFin = event.clientX - canvas.offsetLeft; 
                 yFin = event.clientY - canvas.offsetTop; 
                 roundRadius = ((xFin + yFin) - (xInic + yInic))/2; // Calculamos el radio sumando los valores y dividiendo por 2
-
                 if(roundRadius < 0){ // Si el radio es menor a 0 lo multiplicamos por -1 para que sea positivo
-                    roundRadius *= -1;
-                    //xFin += ((xFin) / 2);
+                    roundRadius *= -1; // Multiplicamos para que se vuelva positivo
+                    xFin += roundRadius; //Sumamos el radio a xFin para que aparezca en su lugar y no desplazado a un lado
                     context.arc(xFin, yFin, roundRadius, 0, 2 * Math.PI);
                 }else{
-                    //xInic += ((xInic) / 2);
-                    context.arc(xInic, yFin, roundRadius, 0, 2 * Math.PI);
+                    xInic += roundRadius; //Sumamos el radio a xInic para que aparezca en su lugar y no desplazado a un lado
+                    context.arc(xInic, yInic, roundRadius, 0, 2 * Math.PI);
                 }
                 if(isRound){ // Si hemos seleccionado la redonda vacia hacemos un stroke
                     context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
@@ -256,12 +255,4 @@ function main(){
     // LISTENER BOTÓN GUARDAR
     saveButton.addEventListener('click', save, false) // Al hacer clic en el botón guardar se ejecuta la function save
 
-    document.getElementById('showVar').onclick = () =>{
-        console.log("isBrush: " + isBrush);
-        console.log("isRect: " + isRect);
-        console.log("isFillRect: " + isFillRect);
-        console.log("isRound: " + isRound);
-        console.log("isFillRound: " + isFillRound);
-        console.log("isText: " + isText);
-    }
 }
