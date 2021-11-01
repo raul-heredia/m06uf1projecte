@@ -24,18 +24,20 @@
 
 main {
     width: 1536px;
+    height: auto;
     border: 2px solid #343a40;
     margin: 0 auto;
     display: flex;
     flex-grow: 1;
-    border-radius: 0.5em;
+    border-radius: 4px;
+    user-select: none;
 }
 
 .panel {
     width: 160px;
     border-right: 2px solid #5e6870;
     background-color: #737e88;
-    border-top-left-radius: 0.5em;
+    border-top-left-radius: 4px;
 }
 
 .colors {
@@ -161,12 +163,12 @@ main {
     margin-left: 8px;
 }
 
-.formas{
+.formas {
     padding: 10px 5px 10px 12px;
     background-color: #737e88;
     border-top-left-radius: 0.5em;
-    }
-    
+}
+
 .formas button {
     display: inline-block;
     border: 2px solid #000000;
@@ -177,7 +179,7 @@ main {
     margin: 5px;
 }
 
-.formas .activeButton{
+.formas .activeButton {
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
@@ -187,44 +189,64 @@ main {
     padding-top: 10px;
 }
 
-.formas .hidden{
+.formas .hidden {
     display: none;
 }
 
-.formas #textInput{
+.formas #textInput {
     width: 90%;
-}
-.formas #romb i, .formas #fillRomb i{
-    transform:  rotateY(180deg) rotate(45deg);
 }
 
-.formas #textSlider{
+.formas #romb i, .formas #fillRomb i {
+    transform: rotateY(180deg) rotate(45deg);
+}
+
+.formas #textSlider {
     width: 90%;
+}
+
+#imageLabel {
+    width: 90%;
+    background-color: #2962ff;
+    border: 2px solid #2962ff;
+    margin: 0 auto;
+    border-radius: 4px;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+    font-size: 16px;
+    margin: 4px 2px;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
 }
 
 .buttons button {
     display: block;
     width: 90%;
-    border: 0;
-    border-radius: 0;
-    background-color: #ece8e8;
-    margin: 0 auto;
-    margin-bottom: 5px;
+    background-color: #2962ff;
+    border: 2px solid #2962ff;
+    margin: 8px auto;
+    border-radius: 4px;
+    color: white;
     padding: 5px;
-    height: 30px;
-    outline: none;
+    font-weight: bold;
+    text-align: center;
     position: relative;
-    cursor: pointer;
     font-size: 16px;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
 }
 
-.right-block {
-    width: 1228px;
+.buttons button:hover, #imageLabel:hover {
+    background-color: white;
+    color: #2962ff;
+    border-radius: 4px;
 }
 
 #paint-canvas {
     cursor: crosshair;
 }
-
-
-

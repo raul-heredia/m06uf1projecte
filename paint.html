@@ -76,8 +76,13 @@
                 <button type="button" id="text" value="8"><i class="fas fa-font"></i></button>
                 <button type="button" id="bold" class="hidden" value="9"><i class="fas fa-bold"></i></button>
                 <button type="button" id="italic" class="hidden" value="10"><i class="fas fa-italic"></i></button>
+                <button type="button" id="image" value="11"><i class="fas fa-image"></i></button>
                 <label for="textSize" id="labelSize" class="hidden">Tamaño Texto: 18</label>
                 <input type="range" id="textSlider" min="18" max="40" value="18" class="hidden">
+                <label class="hidden" id="imageLabel" for="imageInput">
+                    Subir Imagen
+                    <input type="file" class="hidden" id="imageInput">
+                </label>
             </div>
             <div class="buttons">
                 <button id="clear" type="button">Limpiar</button>
@@ -85,7 +90,7 @@
             </div>
         </div>
         <div class="right-block">
-            <canvas id="paint-canvas" width="1370" height="600"></canvas>
+            <canvas id="paint-canvas" width="1373" height="600"></canvas>
         </div>
     </main>
 </body>

@@ -33,7 +33,6 @@ function main() {
     context.strokeStyle = drawColor;
     context.lineWidth = paintWidth;
     let isDrawing = false;
-    context.lineCap = 'round';
 
     // VARIABLES FORMAS
     let xInic, yInic, xFin, yFin, rectWidth, rectHeight, roundRadius;
@@ -42,6 +41,12 @@ function main() {
     let textSlider = document.getElementById('textSlider');
     let textLabel = document.getElementById('labelSize');
     let textSize = 18;
+    // VARIABLES INPUT IMAGE
+
+    let imageInput = document.getElementById('imageInput');
+    let img = new Image();
+
+
 
     // VARIABLES BOTÓN LIMPIAR
     let clearButton = document.getElementById('clear');
@@ -115,13 +120,15 @@ function main() {
         document.getElementById('italic').classList.remove('activeButton');
         document.getElementById('textSlider').classList.add('hidden');
         document.getElementById('labelSize').classList.add('hidden');
+        document.getElementById('image').classList.remove('activeButton');
+        document.getElementById('imageLabel').classList.add('hidden');
     }
 
     function formasButton(event) {
         let buttonClicked = event.target.value;
 
         if (event.target.tagName == 'I' && event.target.parentNode.tagName == 'BUTTON') {
-            buttonClicked = event.target.parentNode.value; // Nos aseguramos que clicando el icono no devuelva undefined
+            buttonClicked = event.target.parentNode.value; // Nos aseguramos que clicando el icono no devuelva undefined diciendole que el value es el valor del parentNode (El valor de cada botón)
         }
         switch (buttonClicked) {
             case "1":
@@ -194,6 +201,12 @@ function main() {
                     isItalic = false;
                 }
                 break;
+            case "11":
+                resetVars();
+                resetActive();
+                document.getElementById('image').classList.add('activeButton');
+                document.getElementById('imageLabel').classList.remove('hidden');
+                break;
         };
     }
 
@@ -219,10 +232,18 @@ function main() {
 
             if (isText) {
                 let mensaje = (prompt('Introduce tu mensaje'));
+                if(isItalic){
+                context.font = `italic ${textSize}px Arial`;
+                }else if(isbold){
+                context.font = `bold ${textSize}px Arial`;
+                }else if(isbold && isItalic){
+                    context.font = `bold italic ${textSize}px Arial`;
+                }else{
+                    context.font = `normal ${textSize}px Arial`;
+                }
 
-                context.font = `${textSize}px Arial`;
                 context.fillText(mensaje, xInic, yInic);
-
+                isDrawing = false;
             }
         }
     }
@@ -281,6 +302,31 @@ function main() {
             }
         }
     }
+    // FUNCION SUBIR IMAGEN
+
+    function imageUpload(event){
+        let files = event.target.files;
+        let file = files[0];
+        if(file.type.match('image.*')){
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) =>{
+                if (event.target.readyState == FileReader.DONE){
+                    img.src = event.target.result;
+                    img.onload = () => context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    // Poner brush por defecto
+                    resetVars();
+                    resetActive();
+                    isBrush = true;
+                    document.getElementById('brush').classList.add('activeButton');
+                }
+            }
+        }else{
+            alert("El archivo seleccionado no es una imagen")
+        }
+
+    }
 
     // FUNCION LIMPIAR CANVAS
     function clear() { // Hacemos un clear de todo el canvas
@@ -313,12 +359,14 @@ function main() {
     // LISTENER TEXT SIZE
     textSlider.addEventListener('change', textSizePicker, false); // Cuando cambia el valor del input range se ejecuta la funcion widthPicker
 
-    // Listener dibujo
+    // LISTENER DIBUJO
     canvas.addEventListener('mousedown', start, false) // Cuando el ratón está abajo (Clic mantenido) ejecutamos la funcion start 
     canvas.addEventListener('mousemove', draw, false) // Mientras movemos el ratón con el clic mantenido dibujamos
     canvas.addEventListener('mouseup', stop, false) // Cuando soltamos el ratón para de dibujar
     canvas.addEventListener('mouseout', stop, false) // Si el ratón sale fuera del canvas para de dibujar
 
+    // LISTENER SUBIR IMAGEN
+    imageInput.addEventListener('change', imageUpload, false) // Si el ratón sale fuera del canvas para de dibujar
     // LISTENER BOTON LIMPIAR
     clearButton.addEventListener('click', clear, false) // Al hacer clic en el boton Limpiar se ejecuta la función clear
 
