@@ -27,7 +27,7 @@ function main() {
     let formas = document.getElementsByClassName('formas')[0];
     let isBrush = true, isRect = false, isFillRect = false, isRound = false,
         isFillRound = false, isRomb = false, isFillRomb = false, isText = false,
-        isbold = false, isItalic = false;
+        isbold = false, isItalic = false, isTriangle = false, isFillTriangle = false;
 
     // VARIABLES DIBUJO
     context.strokeStyle = drawColor;
@@ -35,7 +35,7 @@ function main() {
     let isDrawing = false;
 
     // VARIABLES FORMAS
-    let xInic, yInic, xFin, yFin, rectWidth, rectHeight, roundRadius;
+    let xInic, yInic, xFin, yFin, rectWidth, rectHeight, roundRadius, triangleSide;
 
     // VARIABLES TEXTO
     let textSlider = document.getElementById('textSlider');
@@ -100,6 +100,8 @@ function main() {
         isFillRound = false;
         isRomb = false;
         isFillRomb = false;
+        isTriangle = false;
+        isFillTriangle = false;
         isText = false;
         isbold = false;
         isItalic = false;
@@ -113,6 +115,8 @@ function main() {
         document.getElementById('fillRound').classList.remove('activeButton');
         document.getElementById('romb').classList.remove('activeButton');
         document.getElementById('fillRomb').classList.remove('activeButton');
+        document.getElementById('triangle').classList.remove('activeButton');
+        document.getElementById('fillTriangle').classList.remove('activeButton');
         document.getElementById('text').classList.remove('activeButton');
         document.getElementById('bold').classList.add('hidden');
         document.getElementById('bold').classList.remove('activeButton');
@@ -126,10 +130,13 @@ function main() {
 
     function formasButton(event) {
         let buttonClicked = event.target.value;
-
         if (event.target.tagName == 'I' && event.target.parentNode.tagName == 'BUTTON') {
             buttonClicked = event.target.parentNode.value; // Nos aseguramos que clicando el icono no devuelva undefined diciendole que el value es el valor del parentNode (El valor de cada botón)
         }
+        if (event.target.tagName == 'IMG' && event.target.parentNode.tagName == 'BUTTON') {
+            buttonClicked = event.target.parentNode.value; // Lo mismo que arriba pero con IMG y BUTTON para los iconos del triangulo
+        }
+
         switch (buttonClicked) {
             case "1":
                 resetVars();
@@ -173,7 +180,19 @@ function main() {
                 isFillRomb = true;
                 document.getElementById('fillRomb').classList.add('activeButton');
                 break;
-            case "8":
+            case "8": // Triangle
+                resetVars();
+                resetActive();
+                isTriangle = true;
+                document.getElementById('triangle').classList.add('activeButton');
+                break;
+            case "9": // fillTriangle
+                resetVars();
+                resetActive();
+                isFillTriangle = true;
+                document.getElementById('fillTriangle').classList.add('activeButton');
+                break;
+            case "10":
                 resetVars();
                 resetActive();
                 isText = true;
@@ -183,7 +202,7 @@ function main() {
                 document.getElementById('textSlider').classList.remove('hidden');
                 document.getElementById('labelSize').classList.remove('hidden');
                 break;
-            case "9":
+            case "11":
                 if (!isbold) {
                     document.getElementById('bold').classList.add('activeButton');
                     isbold = true;
@@ -192,7 +211,7 @@ function main() {
                     isbold = false;
                 }
                 break;
-            case "10":
+            case "12":
                 if (!isItalic) {
                     document.getElementById('italic').classList.add('activeButton');
                     isItalic = true;
@@ -201,7 +220,7 @@ function main() {
                     isItalic = false;
                 }
                 break;
-            case "11":
+            case "13":
                 resetVars();
                 resetActive();
                 document.getElementById('image').classList.add('activeButton');
@@ -232,19 +251,26 @@ function main() {
 
             if (isText) {
                 let mensaje = (prompt('Introduce tu mensaje'));
-                if(isItalic){
-                context.font = `italic ${textSize}px Arial`;
-                }else if(isbold){
-                context.font = `bold ${textSize}px Arial`;
-                }else if(isbold && isItalic){
+                if (isItalic) {
+                    context.font = `italic ${textSize}px Arial`;
+                } else if (isbold) {
+                    context.font = `bold ${textSize}px Arial`;
+                } else if (isbold && isItalic) {
                     context.font = `bold italic ${textSize}px Arial`;
-                }else{
+                } else {
                     context.font = `normal ${textSize}px Arial`;
                 }
 
                 context.fillText(mensaje, xInic, yInic);
                 isDrawing = false;
             }
+        }
+        if (isTriangle || isFillTriangle) {
+            isDrawing = true; // Ponemos la variable isDrawing en true
+            xInic = event.clientX - canvas.offsetLeft;  // Guardamos el valor inicial de X
+            yInic = event.clientY - canvas.offsetTop; // Guardamos el valor inicial de Y
+            context.beginPath(); // Iniciamos una nueva ruta
+            context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop); // Movemos el path a donde el usuario ha hecho clic
         }
     }
 
@@ -301,18 +327,35 @@ function main() {
                 resetDegree();
             }
         }
+        if (isTriangle || isFillTriangle) {
+            if (isDrawing) {
+                xFin = event.clientX - canvas.offsetLeft;
+                yFin = event.clientY - canvas.offsetTop;
+                triangleSide = ((xFin - xInic) / 2);
+                context.lineTo(xFin, yInic)
+                context.lineTo((triangleSide + xInic), yInic - triangleSide);
+                context.closePath();
+                if (isTriangle) {
+                    context.stroke(); // per a finalitzar i dibuixar el contorn
+                } else if (isFillTriangle) {
+                    context.fill()
+                }
+                isDrawing = false; // Ponemos isdrawing en false
+            }
+        }
     }
     // FUNCION SUBIR IMAGEN
 
-    function imageUpload(event){
+    function imageUpload(event) {
         let files = event.target.files;
         let file = files[0];
-        if(file.type.match('image.*')){
+        if (file.type.match('image.*')) {
             let reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = (event) =>{
-                if (event.target.readyState == FileReader.DONE){
+            reader.onload = (event) => {
+                if (event.target.readyState == FileReader.DONE) {
                     img.src = event.target.result;
+                    clear();
                     img.onload = () => context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
                     // Poner brush por defecto
@@ -322,7 +365,7 @@ function main() {
                     document.getElementById('brush').classList.add('activeButton');
                 }
             }
-        }else{
+        } else {
             alert("El archivo seleccionado no es una imagen")
         }
 
