@@ -33,6 +33,7 @@ function main() {
     context.strokeStyle = drawColor;
     context.lineWidth = paintWidth;
     let isDrawing = false;
+    context.lineCap = 'round';
 
     // VARIABLES FORMAS
     let xInic, yInic, xFin, yFin, rectWidth, rectHeight, roundRadius, triangleSide;
@@ -108,6 +109,8 @@ function main() {
     }
 
     function resetActive() { // Eliminamos la clase de todos los botones (Aunque no existan)
+        document.getElementById('width-slider').classList.add('hidden');
+        document.getElementById('grosor').classList.add('hidden');
         document.getElementById('brush').classList.remove('activeButton');
         document.getElementById('rect').classList.remove('activeButton');
         document.getElementById('fillRect').classList.remove('activeButton');
@@ -142,12 +145,16 @@ function main() {
                 resetVars();
                 resetActive();
                 isBrush = true;
+                document.getElementById('width-slider').classList.remove('hidden');
+                document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('brush').classList.add('activeButton');
                 break;
             case "2":
                 resetVars();
                 resetActive();
                 isRect = true;
+                document.getElementById('width-slider').classList.remove('hidden');
+                document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('rect').classList.add('activeButton');
                 break;
             case "3":
@@ -160,6 +167,8 @@ function main() {
                 resetVars();
                 resetActive();
                 isRound = true;
+                document.getElementById('width-slider').classList.remove('hidden');
+                document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('round').classList.add('activeButton');
                 break;
             case "5":
@@ -172,6 +181,8 @@ function main() {
                 resetVars();
                 resetActive();
                 isRomb = true;
+                document.getElementById('width-slider').classList.remove('hidden');
+                document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('romb').classList.add('activeButton');
                 break;
             case "7":
@@ -184,6 +195,8 @@ function main() {
                 resetVars();
                 resetActive();
                 isTriangle = true;
+                document.getElementById('width-slider').classList.remove('hidden');
+                document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('triangle').classList.add('activeButton');
                 break;
             case "9": // fillTriangle

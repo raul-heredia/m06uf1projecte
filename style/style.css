@@ -44,7 +44,6 @@ main {
     border-top-left-radius: 0.5em;
     background-color: #737e88;
     text-align: center;
-    padding-bottom: 5px;
     padding-top: 10px;
 }
 
@@ -145,7 +144,7 @@ main {
     padding-top: 10px
 }
 
-#width-slider {
+#width-slider, #textSlider {
     display: block;
     width: 90%;
     border: 0;
@@ -159,7 +158,7 @@ main {
     cursor: pointer;
 }
 
-#grosor {
+#grosor, #labelSize {
     margin-left: 8px;
 }
 
@@ -189,7 +188,7 @@ main {
     padding-top: 10px;
 }
 
-.formas .hidden {
+.formas .hidden, #ranges .hidden {
     display: none;
 }
 
@@ -203,10 +202,6 @@ main {
 
 .formas button > img{
     padding-bottom: 4px;
-}
-
-.formas #textSlider {
-    width: 90%;
 }
 
 #imageLabel {
