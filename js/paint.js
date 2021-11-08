@@ -256,7 +256,7 @@ function main() {
             context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop)
             context.stroke();
         }
-        if (isRect || isFillRect || isRound || isFillRound || isText) {
+        if (isRect || isFillRect || isRound || isFillRound || isText || isRomb || isFillRomb) {
             isDrawing = true; // Ponemos la variable isDrawing en true
             xInic = event.clientX - canvas.offsetLeft;  // Guardamos el valor inicial de X
             yInic = event.clientY - canvas.offsetTop; // Guardamos el valor inicial de Y
@@ -284,6 +284,17 @@ function main() {
             yInic = event.clientY - canvas.offsetTop; // Guardamos el valor inicial de Y
             context.beginPath(); // Iniciamos una nueva ruta
             context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop); // Movemos el path a donde el usuario ha hecho clic
+        }
+        if (isRomb || isFillRomb) {
+            isDrawing = true; // Ponemos la variable isDrawing en true
+            context.save(); //Guardamos para girarlo
+            context.translate(xInic, yInic);//Mueve el origen a las coordenadas deseadas
+            context.rotate(Math.PI / 4); //Giramos el canvas para formar el rombo
+            context.translate(-xInic, -yInic);//Volvemos a la posicion inicial
+            //context.rotate(20); //Giramos el cuadrado para formar el rombo
+            xInic = event.clientX - canvas.offsetLeft;  // Guardamos el valor inicial de X
+            yInic = event.clientY - canvas.offsetTop; // Guardamos el valor inicial de Y
+            context.beginPath(); // Iniciamos una nueva ruta
         }
     }
 
@@ -340,20 +351,37 @@ function main() {
                 resetDegree();
             }
         }
-        if (isTriangle || isFillTriangle) {
-            if (isDrawing) {
-                xFin = event.clientX - canvas.offsetLeft;
-                yFin = event.clientY - canvas.offsetTop;
-                triangleSide = ((xFin - xInic) / 2);
-                context.lineTo(xFin, yInic)
-                context.lineTo((triangleSide + xInic), yInic - triangleSide);
-                context.closePath();
-                if (isTriangle) {
-                    context.stroke(); // per a finalitzar i dibuixar el contorn
-                } else if (isFillTriangle) {
-                    context.fill()
+        if (isRomb || isFillRomb) {
+            if (isDrawing) { // Si soltamos el raton y isDrawing es cierto, 
+                xFin = event.clientX - canvas.offsetLeft; // Guardamos el valor final de X
+                yFin = event.clientY - canvas.offsetTop;  // Guardamos el valor final de Y
+                rombWidth = xFin - xInic; // Calculamos el ancho del rectangulo restando xInic a xFin
+                rombHeight = yFin - yInic; // Calculamos el alto del rectangulo restando yInic a yFin
+                context.rect(xInic, yInic, 150, 150)// Hacemos el rectangulo
+                if (isFillRomb) { // Si hemos hecho clic en el botón de rectangulo pintado hacemos un fill
+                    context.fill();
+                } else if (isRomb) { // Si hemos hecho clic en el botón de rectangulo vacío hacemos un stroke
+                    context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
                 }
-                isDrawing = false; // Ponemos isdrawing en false
+                context.closePath(); // Acabamos la ruta
+                context.restore();
+                isDrawing = false; // Declaramos isDrawing en false para decir que hemos acabado de dibujar
+            }
+            if (isTriangle || isFillTriangle) {
+                if (isDrawing) {
+                    xFin = event.clientX - canvas.offsetLeft;
+                    yFin = event.clientY - canvas.offsetTop;
+                    triangleSide = ((xFin - xInic) / 2);
+                    context.lineTo(xFin, yInic)
+                    context.lineTo((triangleSide + xInic), yInic - triangleSide);
+                    context.closePath();
+                    if (isTriangle) {
+                        context.stroke(); // per a finalitzar i dibuixar el contorn
+                    } else if (isFillTriangle) {
+                        context.fill()
+                    }
+                    isDrawing = false; // Ponemos isdrawing en false
+                }
             }
         }
     }
@@ -429,4 +457,4 @@ function main() {
     // LISTENER BOTÓN GUARDAR
     saveButton.addEventListener('click', save, false) // Al hacer clic en el botón guardar se ejecuta la function save
 
-}
+};
