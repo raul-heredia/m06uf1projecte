@@ -106,6 +106,7 @@ function main() {
         isText = false;
         isbold = false;
         isItalic = false;
+
     }
 
     function resetActive() { // Eliminamos la clase de todos los botones (Aunque no existan)
@@ -132,16 +133,16 @@ function main() {
     }
 
     function formasButton(event) {
-        let buttonClicked = event.target.value;
+        let buttonClicked = event.target.id;
         if (event.target.tagName == 'I' && event.target.parentNode.tagName == 'BUTTON') {
-            buttonClicked = event.target.parentNode.value; // Nos aseguramos que clicando el icono no devuelva undefined diciendole que el value es el valor del parentNode (El valor de cada botón)
+            buttonClicked = event.target.parentNode.id; // Nos aseguramos que clicando el icono no devuelva undefined diciendole que el value es el valor del parentNode (El valor de cada botón)
         }
         if (event.target.tagName == 'IMG' && event.target.parentNode.tagName == 'BUTTON') {
-            buttonClicked = event.target.parentNode.value; // Lo mismo que arriba pero con IMG y BUTTON para los iconos del triangulo
+            buttonClicked = event.target.parentNode.id; // Lo mismo que arriba pero con IMG y BUTTON para los iconos del triangulo
         }
 
         switch (buttonClicked) {
-            case "1":
+            case "brush":
                 resetVars();
                 resetActive();
                 isBrush = true;
@@ -149,7 +150,10 @@ function main() {
                 document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('brush').classList.add('activeButton');
                 break;
-            case "2":
+            case "fillCanvas":
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                break;
+            case "rect":
                 resetVars();
                 resetActive();
                 isRect = true;
@@ -157,13 +161,13 @@ function main() {
                 document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('rect').classList.add('activeButton');
                 break;
-            case "3":
+            case "fillRect":
                 resetVars();
                 resetActive();
                 isFillRect = true;
                 document.getElementById('fillRect').classList.add('activeButton');
                 break;
-            case "4":
+            case "round":
                 resetVars();
                 resetActive();
                 isRound = true;
@@ -171,13 +175,13 @@ function main() {
                 document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('round').classList.add('activeButton');
                 break;
-            case "5":
+            case "fillRound":
                 resetVars();
                 resetActive();
                 isFillRound = true;
                 document.getElementById('fillRound').classList.add('activeButton');
                 break;
-            case "6":
+            case "romb":
                 resetVars();
                 resetActive();
                 isRomb = true;
@@ -185,13 +189,13 @@ function main() {
                 document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('romb').classList.add('activeButton');
                 break;
-            case "7":
+            case "fillRomb":
                 resetVars();
                 resetActive();
                 isFillRomb = true;
                 document.getElementById('fillRomb').classList.add('activeButton');
                 break;
-            case "8": // Triangle
+            case "triangle": // Triangle
                 resetVars();
                 resetActive();
                 isTriangle = true;
@@ -199,13 +203,13 @@ function main() {
                 document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('triangle').classList.add('activeButton');
                 break;
-            case "9": // fillTriangle
+            case "fillTriangle": // fillTriangle
                 resetVars();
                 resetActive();
                 isFillTriangle = true;
                 document.getElementById('fillTriangle').classList.add('activeButton');
                 break;
-            case "10":
+            case "text":
                 resetVars();
                 resetActive();
                 isText = true;
@@ -215,7 +219,7 @@ function main() {
                 document.getElementById('textSlider').classList.remove('hidden');
                 document.getElementById('labelSize').classList.remove('hidden');
                 break;
-            case "11":
+            case "bold":
                 if (!isbold) {
                     document.getElementById('bold').classList.add('activeButton');
                     isbold = true;
@@ -224,7 +228,7 @@ function main() {
                     isbold = false;
                 }
                 break;
-            case "12":
+            case "italic":
                 if (!isItalic) {
                     document.getElementById('italic').classList.add('activeButton');
                     isItalic = true;
@@ -233,7 +237,7 @@ function main() {
                     isItalic = false;
                 }
                 break;
-            case "13":
+            case "image":
                 resetVars();
                 resetActive();
                 document.getElementById('image').classList.add('activeButton');
@@ -273,8 +277,7 @@ function main() {
                 } else {
                     context.font = `normal ${textSize}px Arial`;
                 }
-
-                context.fillText(mensaje, xInic, yInic);
+                if (mensaje) context.fillText(mensaje, xInic, yInic);
                 isDrawing = false;
             }
         }
@@ -327,6 +330,22 @@ function main() {
                 resetDegree();
             }
         }
+        if (isRomb || isFillRomb) {
+            if (isDrawing) { // Si soltamos el raton y isDrawing es cierto, 
+                xFin = event.clientX - canvas.offsetLeft; // Guardamos el valor final de X
+                yFin = event.clientY - canvas.offsetTop;  // Guardamos el valor final de Y
+                rombSize = xFin - xInic; // Calculamos el ancho del rectangulo restando xInic a xFin
+                context.rect(xInic, yInic, rombSize, rombSize)// Hacemos el rectangulo
+                if (isFillRomb) { // Si hemos hecho clic en el botón de rectangulo pintado hacemos un fill
+                    context.fill();
+                } else if (isRomb) { // Si hemos hecho clic en el botón de rectangulo vacío hacemos un stroke
+                    context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
+                }
+                context.closePath(); // Acabamos la ruta
+                context.restore();
+                isDrawing = false; // Declaramos isDrawing en false para decir que hemos acabado de dibujar
+            }
+        }
 
         if (isRound || isFillRound) {
             if (isDrawing) { // Si soltamos el raton y isDrawing es cierto, 
@@ -351,37 +370,20 @@ function main() {
                 resetDegree();
             }
         }
-        if (isRomb || isFillRomb) {
-            if (isDrawing) { // Si soltamos el raton y isDrawing es cierto, 
-                xFin = event.clientX - canvas.offsetLeft; // Guardamos el valor final de X
-                yFin = event.clientY - canvas.offsetTop;  // Guardamos el valor final de Y
-                rombWidth = xFin - xInic; // Calculamos el ancho del rectangulo restando xInic a xFin
-                rombHeight = yFin - yInic; // Calculamos el alto del rectangulo restando yInic a yFin
-                context.rect(xInic, yInic, 150, 150)// Hacemos el rectangulo
-                if (isFillRomb) { // Si hemos hecho clic en el botón de rectangulo pintado hacemos un fill
-                    context.fill();
-                } else if (isRomb) { // Si hemos hecho clic en el botón de rectangulo vacío hacemos un stroke
-                    context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
+        if (isTriangle || isFillTriangle) {
+            if (isDrawing) {
+                xFin = event.clientX - canvas.offsetLeft;
+                yFin = event.clientY - canvas.offsetTop;
+                triangleSide = ((xFin - xInic) / 2);
+                context.lineTo(xFin, yInic)
+                context.lineTo((triangleSide + xInic), yInic - triangleSide);
+                context.closePath();
+                if (isTriangle) {
+                    context.stroke(); // per a finalitzar i dibuixar el contorn
+                } else if (isFillTriangle) {
+                    context.fill()
                 }
-                context.closePath(); // Acabamos la ruta
-                context.restore();
-                isDrawing = false; // Declaramos isDrawing en false para decir que hemos acabado de dibujar
-            }
-            if (isTriangle || isFillTriangle) {
-                if (isDrawing) {
-                    xFin = event.clientX - canvas.offsetLeft;
-                    yFin = event.clientY - canvas.offsetTop;
-                    triangleSide = ((xFin - xInic) / 2);
-                    context.lineTo(xFin, yInic)
-                    context.lineTo((triangleSide + xInic), yInic - triangleSide);
-                    context.closePath();
-                    if (isTriangle) {
-                        context.stroke(); // per a finalitzar i dibuixar el contorn
-                    } else if (isFillTriangle) {
-                        context.fill()
-                    }
-                    isDrawing = false; // Ponemos isdrawing en false
-                }
+                isDrawing = false; // Ponemos isdrawing en false
             }
         }
     }
@@ -457,4 +459,4 @@ function main() {
     // LISTENER BOTÓN GUARDAR
     saveButton.addEventListener('click', save, false) // Al hacer clic en el botón guardar se ejecuta la function save
 
-};
+}

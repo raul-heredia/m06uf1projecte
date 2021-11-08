@@ -1,11 +1,12 @@
 window.onload = main;
 
 function main() {
-    let moviecontainer = document.getElementById('video-paint'),
-        movie = moviecontainer.querySelector('video'),
-        controls = moviecontainer.querySelector('figcaption'),
-        playpause = document.getElementById('playpause');
-    movie.removeAttribute('controls');
+    let videoContainer = document.getElementById('video-paint'),
+        video = videoContainer.getElementsByTagName('video')[0],
+        retroceder = document.getElementById('retroceder'),
+        playpause = document.getElementById('playpause'),
+        avanzar = document.getElementById('avanzar');
+
 
 
     // ----------------------------------------- 
@@ -13,18 +14,26 @@ function main() {
     // -----------------------------------------
 
     function playPause(event) {
-        if (movie.paused) {
-            movie.play();
+        if (video.paused) {
+            video.play();
             playpause.querySelector('i').classList.remove('fa-play');
             playpause.querySelector('i').classList.add('fa-pause');
         } else {
-            movie.pause();
+            video.pause();
             playpause.querySelector('i').classList.remove('fa-pause');
             playpause.querySelector('i').classList.add('fa-play');
         }
     }
 
+    function retrocederTiempo(event) {
+        video.currentTime -= 10;
+    }
+    function avanzarTiempo(event) {
+        console.log("Clic Avanzar");
+        video.currentTime += 10;
+    }
 
-
-    playpause.addEventListener("click", playPause, false)
+    playpause.addEventListener("click", playPause, false);
+    retroceder.addEventListener("click", retrocederTiempo, false);
+    avanzar.addEventListener("click", avanzarTiempo, false);
 }
