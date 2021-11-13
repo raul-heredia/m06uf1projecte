@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
     <script src="./js/paint.js"></script>
     <title>Document</title>
 </head>
@@ -37,7 +38,6 @@
     </nav>
     <main>
         <div class="panel">
-
             <div class="colors">
                 <button type="button" value="#d50000"></button>
                 <button type="button" value="#ff1744"></button>
@@ -61,7 +61,6 @@
             </div>
             <div class="formas">
                 <button type="button" id="brush" class="activeButton"><i class="fas fa-paint-brush"></i></button>
-                <button type="button" id="fillCanvas"><i class="fas fa-fill-drip"></i></button>
                 <button type="button" id="rect"><i class="far fa-square"></i></button>
                 <button type="button" id="fillRect"><i class="fas fa-square"></i></button>
                 <button type="button" id="round"><i class="far fa-circle"></i></button>
@@ -74,16 +73,36 @@
                 <button type="button" id="bold" class="hidden"><i class="fas fa-bold"></i></button>
                 <button type="button" id="italic" class="hidden"><i class="fas fa-italic"></i></button>
                 <button type="button" id="image"><i class="fas fa-image"></i></button>
+                <button type="button" id="fillCanvas"><i class="fas fa-fill-drip"></i></button>
                 <label class="hidden" id="imageLabel" for="imageInput">
                     Subir Imagen
                     <input type="file" class="hidden" id="imageInput">
                 </label>
             </div>
-            <div id="ranges">
+            <div id="optionals">
                 <label id="grosor">Grosor: 5</label>
                 <input type="range" min="1" max="30" value="5" id="width-slider">
                 <label for="textSize" id="labelSize" class="hidden">Tamaño Texto: 18</label>
                 <input type="range" id="textSlider" min="18" max="40" value="18" class="hidden">
+                <div id="lineDash">
+                    <select id="tipoLinea" name="lineas">
+                        <option value="solidLine">
+                            Línea Continua
+                        </option>
+                        <option value="dashLine">
+                            Línea Disontinua
+                        </option>
+                    </select>
+                </div>
+                <div id="fonts" class="hidden">
+                    <label for="fuentes" id="fuentesLbael">Fuente:</label>
+                    <select id="fontSelect" name="fuentes">
+                        <option value="Arial">Arial</option>
+                        <option value="Poppins">Poppins</option>
+                        <option value="Raleway">Raleway</option>
+                        <option value="Barlow Condensed">Barlow Condensed</option>
+                    </select>
+                </div>
             </div>
             <div class="buttons">
                 <button id="clear" type="button">Limpiar</button>
@@ -94,6 +113,12 @@
             <canvas id="paint-canvas" width="1373" height="600"></canvas>
         </div>
     </main>
+    <!-- Este div se usa para obligar al navegador a precargar las webfonts del canvas -->
+    <div>
+        <p class="poppins">Foo</p>
+        <p class="raleway">Foo</p>
+        <p class="barlow">Foo</p>
+    </div>
 </body>
 
 <!-- Optional JavaScript -->

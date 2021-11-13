@@ -1,7 +1,6 @@
 window.onload = main;
 
 function main() {
-
     // ----------------------------------------- 
     // --------------- VARIABLES ---------------
     // -----------------------------------------
@@ -22,12 +21,15 @@ function main() {
     let widthLabel = document.getElementById('grosor');
     let paintWidth = 5;
 
+    // VARIABLES TIPO DE LINEA
+    let lineTypePicker = document.getElementById('lineDash');
+    context.setLineDash([]);
 
     //VARIABLES BOTONES FORMAS
     let formas = document.getElementsByClassName('formas')[0];
     let isBrush = true, isRect = false, isFillRect = false, isRound = false,
         isFillRound = false, isRomb = false, isFillRomb = false, isText = false,
-        isbold = false, isItalic = false, isTriangle = false, isFillTriangle = false;
+        isBold = false, isItalic = false, isTriangle = false, isFillTriangle = false;
 
     // VARIABLES DIBUJO
     context.strokeStyle = drawColor;
@@ -41,6 +43,8 @@ function main() {
     // VARIABLES TEXTO
     let textSlider = document.getElementById('textSlider');
     let textLabel = document.getElementById('labelSize');
+    let textSelect = document.getElementById('fontSelect');
+    let textFont = 'Arial'
     let textSize = 18;
     // VARIABLES INPUT IMAGE
 
@@ -81,17 +85,35 @@ function main() {
 
     // FUNCION GROSOR DE LINEA
 
-    function widthPicker(event) {
+    function widthPicker() {
         //console.log(widthSlider.value); // Obtiene el valor del slider
         paintWidth = widthSlider.value; // Asigna el valor del slider a la variable paintWidth
         context.lineWidth = paintWidth; // Asigna que el tamaño de la linea es igual al que hemos guardado en la variable 
         widthLabel.innerHTML = `Grosor: ${widthSlider.value}` // Devolvemos el grosor actual en el label grosor
     }
 
-    function textSizePicker(event) {
+    function textSizePicker() {
         textSize = textSlider.value; // Asigna el valor del slider a la variable paintWidth
         textLabel.innerHTML = `Tamaño Texto: ${textSlider.value}` // Devolvemos el grosor actual en el label grosor
     }
+
+    // FUNCION TIPO DE LÍNEA
+    function setLineType(event){
+        if(event.target.value == "solidLine"){
+            context.setLineDash([]); // Si el array de setLineDash está vacío, la linea será normal
+        }else if( event.target.value == "dashLine"){
+            context.setLineDash([20, 20]); // Al poner 10, 20, tendremos 10 cm 
+        }
+    }
+
+
+    // FUNCION SELECCIONAR FUENTE
+    function selectFont(event){
+        textFont = event.target.value;
+        console.log(textFont)
+    }
+
+
 
     function resetVars() { // Reseteamos todas las variables
         isBrush = false;
@@ -104,7 +126,7 @@ function main() {
         isTriangle = false;
         isFillTriangle = false;
         isText = false;
-        isbold = false;
+        isBold = false;
         isItalic = false;
 
     }
@@ -130,6 +152,8 @@ function main() {
         document.getElementById('labelSize').classList.add('hidden');
         document.getElementById('image').classList.remove('activeButton');
         document.getElementById('imageLabel').classList.add('hidden');
+        document.getElementById('fonts').classList.add('hidden');
+        document.getElementById('lineDash').classList.add('hidden');
     }
 
     function formasButton(event) {
@@ -140,7 +164,6 @@ function main() {
         if (event.target.tagName == 'IMG' && event.target.parentNode.tagName == 'BUTTON') {
             buttonClicked = event.target.parentNode.id; // Lo mismo que arriba pero con IMG y BUTTON para los iconos del triangulo
         }
-
         switch (buttonClicked) {
             case "brush":
                 resetVars();
@@ -148,6 +171,7 @@ function main() {
                 isBrush = true;
                 document.getElementById('width-slider').classList.remove('hidden');
                 document.getElementById('grosor').classList.remove('hidden');
+                document.getElementById('lineDash').classList.remove('hidden');
                 document.getElementById('brush').classList.add('activeButton');
                 break;
             case "fillCanvas":
@@ -159,6 +183,7 @@ function main() {
                 isRect = true;
                 document.getElementById('width-slider').classList.remove('hidden');
                 document.getElementById('grosor').classList.remove('hidden');
+                document.getElementById('lineDash').classList.remove('hidden');
                 document.getElementById('rect').classList.add('activeButton');
                 break;
             case "fillRect":
@@ -173,6 +198,7 @@ function main() {
                 isRound = true;
                 document.getElementById('width-slider').classList.remove('hidden');
                 document.getElementById('grosor').classList.remove('hidden');
+                document.getElementById('lineDash').classList.remove('hidden');
                 document.getElementById('round').classList.add('activeButton');
                 break;
             case "fillRound":
@@ -187,6 +213,7 @@ function main() {
                 isRomb = true;
                 document.getElementById('width-slider').classList.remove('hidden');
                 document.getElementById('grosor').classList.remove('hidden');
+                document.getElementById('lineDash').classList.remove('hidden');
                 document.getElementById('romb').classList.add('activeButton');
                 break;
             case "fillRomb":
@@ -201,6 +228,7 @@ function main() {
                 isTriangle = true;
                 document.getElementById('width-slider').classList.remove('hidden');
                 document.getElementById('grosor').classList.remove('hidden');
+                document.getElementById('lineDash').classList.remove('hidden');
                 document.getElementById('triangle').classList.add('activeButton');
                 break;
             case "fillTriangle": // fillTriangle
@@ -218,14 +246,15 @@ function main() {
                 document.getElementById('italic').classList.remove('hidden');
                 document.getElementById('textSlider').classList.remove('hidden');
                 document.getElementById('labelSize').classList.remove('hidden');
+                document.getElementById('fonts').classList.remove('hidden');
                 break;
             case "bold":
-                if (!isbold) {
+                if (!isBold) {
                     document.getElementById('bold').classList.add('activeButton');
-                    isbold = true;
+                    isBold = true;
                 } else {
                     document.getElementById('bold').classList.remove('activeButton');
-                    isbold = false;
+                    isBold = false;
                 }
                 break;
             case "italic":
@@ -246,11 +275,6 @@ function main() {
         };
     }
 
-    function resetDegree() {
-        context.Restore(),
-            document.getElementById('rotar').classList.remove('activeButton');
-    }
-
     function start(event) {
         if (isBrush) {
             isDrawing = true; // Ponemos la variable isDrawing en true
@@ -260,44 +284,38 @@ function main() {
             context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop)
             context.stroke();
         }
-        if (isRect || isFillRect || isRound || isFillRound || isText || isRomb || isFillRomb) {
+        if (isRect || isFillRect || isRound || isFillRound || isText || isRomb || isFillRomb || isTriangle || isFillTriangle) {
             isDrawing = true; // Ponemos la variable isDrawing en true
             xInic = event.clientX - canvas.offsetLeft;  // Guardamos el valor inicial de X
             yInic = event.clientY - canvas.offsetTop; // Guardamos el valor inicial de Y
-            context.beginPath(); // Iniciamos una nueva ruta
-
+            context.beginPath();
             if (isText) {
                 let mensaje = (prompt('Introduce tu mensaje'));
                 if (isItalic) {
-                    context.font = `italic ${textSize}px Arial`;
-                } else if (isbold) {
-                    context.font = `bold ${textSize}px Arial`;
-                } else if (isbold && isItalic) {
-                    context.font = `bold italic ${textSize}px Arial`;
+                    context.font = `italic ${textSize}px ${textFont}`;
+                } else if (isBold) {
+                    context.font = `bold ${textSize}px ${textFont}`;
+                } else if (isBold && isItalic) {
+                    context.font = `bold italic ${textSize}px ${textFont}`;
                 } else {
-                    context.font = `normal ${textSize}px Arial`;
+                    context.font = `normal ${textSize}px ${textFont}`;
                 }
-                if (mensaje) context.fillText(mensaje, xInic, yInic);
+                if (mensaje){
+                    context.fillText(mensaje, xInic, yInic);  
+                } 
+                    
                 isDrawing = false;
             }
-        }
-        if (isTriangle || isFillTriangle) {
-            isDrawing = true; // Ponemos la variable isDrawing en true
-            xInic = event.clientX - canvas.offsetLeft;  // Guardamos el valor inicial de X
-            yInic = event.clientY - canvas.offsetTop; // Guardamos el valor inicial de Y
-            context.beginPath(); // Iniciamos una nueva ruta
-            context.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop); // Movemos el path a donde el usuario ha hecho clic
-        }
-        if (isRomb || isFillRomb) {
-            isDrawing = true; // Ponemos la variable isDrawing en true
-            context.save(); //Guardamos para girarlo
-            context.translate(xInic, yInic);//Mueve el origen a las coordenadas deseadas
-            context.rotate(Math.PI / 4); //Giramos el canvas para formar el rombo
-            context.translate(-xInic, -yInic);//Volvemos a la posicion inicial
-            //context.rotate(20); //Giramos el cuadrado para formar el rombo
-            xInic = event.clientX - canvas.offsetLeft;  // Guardamos el valor inicial de X
-            yInic = event.clientY - canvas.offsetTop; // Guardamos el valor inicial de Y
-            context.beginPath(); // Iniciamos una nueva ruta
+            if (isRomb || isFillRomb){
+                context.save(); //Guardamos para girarlo
+                context.translate(xInic, yInic);//Mueve el origen a las coordenadas deseadas
+                context.rotate(Math.PI / 4); //Giramos el canvas para formar el rombo
+                context.translate(-xInic, -yInic);//Volvemos a la posicion inicial
+            }
+            if (isTriangle || isFillTriangle) {
+                
+                context.moveTo(xInic, yInic); // Movemos el path a donde el usuario ha hecho clic
+            }
         }
     }
 
@@ -308,6 +326,8 @@ function main() {
         }
     }
     function stop(event) {
+        xFin = event.clientX - canvas.offsetLeft; // Guardamos el valor final de X
+        yFin = event.clientY - canvas.offsetTop;  // Guardamos el valor final de Y
         if (isDrawing && isBrush) { // Si soltamos el raton y isDrawing es cierto, 
             context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
             context.closePath(); // Acabamos la ruta
@@ -315,8 +335,6 @@ function main() {
         }
         if (isRect || isFillRect) {
             if (isDrawing) { // Si soltamos el raton y isDrawing es cierto, 
-                xFin = event.clientX - canvas.offsetLeft; // Guardamos el valor final de X
-                yFin = event.clientY - canvas.offsetTop;  // Guardamos el valor final de Y
                 rectWidth = xFin - xInic; // Calculamos el ancho del rectangulo restando xInic a xFin
                 rectHeight = yFin - yInic; // Calculamos el alto del rectangulo restando yInic a yFin
                 context.rect(xInic, yInic, rectWidth, rectHeight) // Hacemos el rectangulo
@@ -327,14 +345,12 @@ function main() {
                 }
                 context.closePath(); // Acabamos la ruta
                 isDrawing = false; // Declaramos isDrawing en false para decir que hemos acabado de dibujar
-                resetDegree();
             }
         }
         if (isRomb || isFillRomb) {
             if (isDrawing) { // Si soltamos el raton y isDrawing es cierto, 
-                xFin = event.clientX - canvas.offsetLeft; // Guardamos el valor final de X
-                yFin = event.clientY - canvas.offsetTop;  // Guardamos el valor final de Y
-                rombSize = xFin - xInic; // Calculamos el ancho del rectangulo restando xInic a xFin
+                let rombSize = xFin - xInic; // Calculamos el ancho del rectangulo restando xInic a xFin
+                
                 context.rect(xInic, yInic, rombSize, rombSize)// Hacemos el rectangulo
                 if (isFillRomb) { // Si hemos hecho clic en el botón de rectangulo pintado hacemos un fill
                     context.fill();
@@ -349,8 +365,6 @@ function main() {
 
         if (isRound || isFillRound) {
             if (isDrawing) { // Si soltamos el raton y isDrawing es cierto, 
-                xFin = event.clientX - canvas.offsetLeft;
-                yFin = event.clientY - canvas.offsetTop;
                 roundRadius = ((xFin + yFin) - (xInic + yInic)) / 2; // Calculamos el radio sumando los valores y dividiendo por 2
                 if (roundRadius < 0) { // Si el radio es menor a 0 lo multiplicamos por -1 para que sea positivo
                     roundRadius *= -1; // Multiplicamos para que se vuelva positivo
@@ -367,13 +381,10 @@ function main() {
                 }
                 context.closePath(); // Acabamos la ruta
                 isDrawing = false; // Ponemos isdrawing en false
-                resetDegree();
             }
         }
         if (isTriangle || isFillTriangle) {
             if (isDrawing) {
-                xFin = event.clientX - canvas.offsetLeft;
-                yFin = event.clientY - canvas.offsetTop;
                 triangleSide = ((xFin - xInic) / 2);
                 context.lineTo(xFin, yInic)
                 context.lineTo((triangleSide + xInic), yInic - triangleSide);
@@ -390,26 +401,26 @@ function main() {
     // FUNCION SUBIR IMAGEN
 
     function imageUpload(event) {
-        let files = event.target.files;
-        let file = files[0];
-        if (file.type.match('image.*')) {
-            let reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (event) => {
-                if (event.target.readyState == FileReader.DONE) {
-                    img.src = event.target.result;
-                    clear();
-                    img.onload = () => context.drawImage(img, 0, 0, canvas.width, canvas.height);
+        let files = event.target.files; // Guardamos el archivo en files, lo cual nos devuelve un array de una posición
+        let file = files[0]; // Obtenemos el archivo en la posición 0
+        if (file.type.match('image.*')) { // Comprobamos si es una imagen
+            let reader = new FileReader(); // Creamos un filereader que nos permitirá leer la imagen que hemos subido
+            reader.readAsDataURL(file); // Leemos el fichero
+            reader.onload = (event) => { // Cuando haya acabado de leer el archivo realizamos lo siguiente:
+                if (event.target.readyState == FileReader.DONE) { // Si el estado es ready
+                    img.src = event.target.result; // el src de la variable img será el resultado del evento
+                    clear(); // Hacemos un clear del canvas antes de insertar la imagen
+                    img.onload = () => context.drawImage(img, 0, 0, canvas.width, canvas.height); // Dibujamos la imagen a tamaño completo del canvas
 
                     // Poner brush por defecto
-                    resetVars();
-                    resetActive();
-                    isBrush = true;
-                    document.getElementById('brush').classList.add('activeButton');
+                    resetVars(); // Reseteamos las variables del menú
+                    resetActive(); // Reseteamos el botón activo
+                    isBrush = true; // Ponemos el pinzel como true
+                    document.getElementById('brush').classList.add('activeButton'); // Ponemos el boton del pinzel como active button para que se pueda empezar a dibujar nada mas subir la imagen 
                 }
             }
         } else {
-            alert("El archivo seleccionado no es una imagen")
+            alert("El archivo seleccionado no es una imagen") // En caso de que el archivo no fuese una imagen damos una alerta
         }
 
     }
@@ -421,7 +432,7 @@ function main() {
 
     // FUNCION GUARDAR CANVAS
     function save() {
-        let imageName = prompt('Introduce el nombre de la imagen');
+        let imageName = prompt('Introduce el nombre de la imagen'); // Introducimos el nombre que tendrá la imagen
         let canvasDataURL = canvas.toDataURL(); // Devuelve una URL que contiene una imagen del dibujo
         let image = document.createElement('a'); // Crea un enlace
         image.href = canvasDataURL; // Asignamos este enlace al que ha generado canvasDataURL
@@ -442,8 +453,14 @@ function main() {
 
     // LISTENER LINE WIDTH
     widthSlider.addEventListener('change', widthPicker, false); // Cuando cambia el valor del input range se ejecuta la funcion widthPicker
-    // LISTENER TEXT SIZE
+    // LISTENER LINE TYPE
+    lineTypePicker.addEventListener('change', setLineType, false); // Cuando cambie el valor del select nos ejecuta la funcion setLineType
+    
+    // LISTENER TEXTO
     textSlider.addEventListener('change', textSizePicker, false); // Cuando cambia el valor del input range se ejecuta la funcion widthPicker
+    textSelect.addEventListener('change', selectFont, false); // Cuando cambia el valor del select se ejecuta la funcion setLineType
+
+
 
     // LISTENER DIBUJO
     canvas.addEventListener('mousedown', start, false) // Cuando el ratón está abajo (Clic mantenido) ejecutamos la funcion start 
