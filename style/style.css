@@ -1,21 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Raleway:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-/*Clases que no se usan para nada pero sirven para que cargue los webfonts y evitar un error que hace que la primera vez no cargue correctamente las fuentes en el canvas*/
-
-.poppins {
-    opacity: 0;
-    font-family: 'Poppins';
-}
-
-.raleway {
-    opacity: 0;
-    font-family: 'Raleway';
-}
-
-.barlow {
-    opacity: 0;
-    font-family: 'Barlow Condensed';
-}
-
 /*NavBar*/
 
 .navbar {
@@ -250,6 +233,18 @@ main {
 
 #tipoLinea {
     margin-top: 5px;
+}
+
+.poppins {
+    font-family: 'Poppins';
+}
+
+.raleway {
+    font-family: 'Raleway';
+}
+
+.barlow {
+    font-family: 'Barlow Condensed';
 }
 
 .buttons button {

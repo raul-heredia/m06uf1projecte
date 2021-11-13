@@ -97,10 +97,10 @@
                 <div id="fonts" class="hidden">
                     <label for="fuentes" id="fuentesLbael">Fuente:</label>
                     <select id="fontSelect" name="fuentes">
-                        <option value="Arial">Arial</option>
-                        <option value="Poppins">Poppins</option>
-                        <option value="Raleway">Raleway</option>
-                        <option value="Barlow Condensed">Barlow Condensed</option>
+                        <option class="poppins" value="Arial">Arial</option>
+                        <option class="poppins" value="Poppins">Poppins</option>
+                        <option class="raleway" value="Raleway">Raleway</option>
+                        <option class="barlow" value="Barlow Condensed">Barlow Condensed</option>
                     </select>
                 </div>
             </div>
@@ -113,12 +113,6 @@
             <canvas id="paint-canvas" width="1373" height="600"></canvas>
         </div>
     </main>
-    <!-- Este div se usa para obligar al navegador a precargar las webfonts del canvas -->
-    <div>
-        <p class="poppins">Foo</p>
-        <p class="raleway">Foo</p>
-        <p class="barlow">Foo</p>
-    </div>
 </body>
 
 <!-- Optional JavaScript -->
