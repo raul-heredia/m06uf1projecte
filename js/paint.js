@@ -98,17 +98,17 @@ function main() {
     }
 
     // FUNCION TIPO DE LÍNEA
-    function setLineType(event){
-        if(event.target.value == "solidLine"){
+    function setLineType(event) {
+        if (event.target.value == "solidLine") {
             context.setLineDash([]); // Si el array de setLineDash está vacío, la linea será normal
-        }else if( event.target.value == "dashLine"){
+        } else if (event.target.value == "dashLine") {
             context.setLineDash([20, 20]); // Al poner 10, 20, tendremos 10 cm 
         }
     }
 
 
     // FUNCION SELECCIONAR FUENTE
-    function selectFont(event){
+    function selectFont(event) {
         textFont = event.target.value;
         console.log(textFont)
     }
@@ -300,20 +300,20 @@ function main() {
                 } else {
                     context.font = `normal ${textSize}px ${textFont}`;
                 }
-                if (mensaje){
-                    context.fillText(mensaje, xInic, yInic);  
-                } 
-                    
+                if (mensaje) {
+                    context.fillText(mensaje, xInic, yInic);
+                }
+
                 isDrawing = false;
             }
-            if (isRomb || isFillRomb){
+            if (isRomb || isFillRomb) {
                 context.save(); //Guardamos para girarlo
                 context.translate(xInic, yInic);//Mueve el origen a las coordenadas deseadas
                 context.rotate(Math.PI / 4); //Giramos el canvas para formar el rombo
                 context.translate(-xInic, -yInic);//Volvemos a la posicion inicial
             }
             if (isTriangle || isFillTriangle) {
-                
+
                 context.moveTo(xInic, yInic); // Movemos el path a donde el usuario ha hecho clic
             }
         }
@@ -350,7 +350,7 @@ function main() {
         if (isRomb || isFillRomb) {
             if (isDrawing) { // Si soltamos el raton y isDrawing es cierto, 
                 let rombSize = xFin - xInic; // Calculamos el ancho del rectangulo restando xInic a xFin
-                
+
                 context.rect(xInic, yInic, rombSize, rombSize)// Hacemos el rectangulo
                 if (isFillRomb) { // Si hemos hecho clic en el botón de rectangulo pintado hacemos un fill
                     context.fill();
@@ -455,7 +455,7 @@ function main() {
     widthSlider.addEventListener('change', widthPicker, false); // Cuando cambia el valor del input range se ejecuta la funcion widthPicker
     // LISTENER LINE TYPE
     lineTypePicker.addEventListener('change', setLineType, false); // Cuando cambie el valor del select nos ejecuta la funcion setLineType
-    
+
     // LISTENER TEXTO
     textSlider.addEventListener('change', textSizePicker, false); // Cuando cambia el valor del input range se ejecuta la funcion widthPicker
     textSelect.addEventListener('change', selectFont, false); // Cuando cambia el valor del select se ejecuta la funcion setLineType
