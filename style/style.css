@@ -24,7 +24,7 @@
 /*Canvas*/
 
 main {
-    width: 1536px;
+    width: 1600px;
     height: 604px;
     border: 2px solid #343a40;
     margin: 0 auto;
@@ -35,7 +35,8 @@ main {
 }
 
 .panel {
-    width: 160px;
+    width: 224px;
+    padding: 2px;
     border-right: 2px solid #5e6870;
     background-color: #737e88;
     border-top-left-radius: 4px;
@@ -145,7 +146,7 @@ main {
     padding-top: 10px
 }
 
-#width-slider, #textSlider {
+#width-slider, #textSlider, #opacidadSlider {
     display: block;
     width: 90%;
     border: 0;
@@ -159,12 +160,12 @@ main {
     cursor: pointer;
 }
 
-#grosor, #labelSize {
+#grosor, #labelSize, #opacidad {
     margin-left: 8px;
 }
 
 .formas {
-    padding: 10px 5px 10px 12px;
+    margin: 0 auto;
     background-color: #737e88;
     border-top-left-radius: 0.5em;
 }
@@ -201,6 +202,10 @@ main {
     transform: rotateY(180deg) rotate(45deg);
 }
 
+.formas #toBlackWhite i{
+    transform: rotateY(180deg) rotate(90deg);
+}
+
 .formas button>img {
     padding-bottom: 4px;
 }
@@ -215,9 +220,9 @@ main {
     padding: 5px;
     font-weight: bold;
     text-align: center;
+    align-items: center;
     position: relative;
     font-size: 16px;
-    margin: 4px 2px;
     font-size: 16px;
     transition-duration: 0.4s;
     cursor: pointer;

@@ -21,6 +21,11 @@ function main() {
     let widthLabel = document.getElementById('grosor');
     let paintWidth = 5;
 
+    // VARIABLES OPACIDAD
+    let opacidadSlider = document.getElementById('opacidadSlider');
+    let opacidadLabel = document.getElementById('opacidad');
+    context.globalAlpha = 1;
+
     // VARIABLES TIPO DE LINEA
     let lineTypePicker = document.getElementById('lineDash');
     context.setLineDash([]);
@@ -37,6 +42,9 @@ function main() {
     let isDrawing = false;
     context.lineCap = 'round';
 
+    // VARIABLES INVERTIR COLORES
+    let invertButton = document.getElementById('invert');
+
     // VARIABLES FORMAS
     let xInic, yInic, xFin, yFin, rectWidth, rectHeight, roundRadius, triangleSide;
 
@@ -51,11 +59,8 @@ function main() {
     let imageInput = document.getElementById('imageInput');
     let img = new Image();
 
-
-
     // VARIABLES BOTÓN LIMPIAR
     let clearButton = document.getElementById('clear');
-
 
     // VARIABLES BOTÓN GUARDAR
     let saveButton = document.getElementById('save');
@@ -110,10 +115,20 @@ function main() {
     // FUNCION SELECCIONAR FUENTE
     function selectFont(event) {
         textFont = event.target.value;
-        console.log(textFont)
     }
 
+    function setOpacidad(event) {
+        context.globalAlpha = event.target.value;
+        opacidad.innerHTML = `Opacidad: ${event.target.value}`
+    }
 
+    function invert() {
+        context.save();
+        context.globalCompositeOperation = 'difference';
+        context.fillStyle = 'white';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.restore();
+    }
 
     function resetVars() { // Reseteamos todas las variables
         isBrush = false;
@@ -148,6 +163,8 @@ function main() {
         document.getElementById('bold').classList.remove('activeButton');
         document.getElementById('italic').classList.add('hidden');
         document.getElementById('italic').classList.remove('activeButton');
+        document.getElementById('opacidadSlider').classList.add('hidden');
+        document.getElementById('opacidad').classList.add('hidden');
         document.getElementById('textSlider').classList.add('hidden');
         document.getElementById('labelSize').classList.add('hidden');
         document.getElementById('image').classList.remove('activeButton');
@@ -169,12 +186,14 @@ function main() {
                 resetVars();
                 resetActive();
                 isBrush = true;
+                context.globalAlpha = 1;
                 document.getElementById('width-slider').classList.remove('hidden');
                 document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('lineDash').classList.remove('hidden');
                 document.getElementById('brush').classList.add('activeButton');
                 break;
             case "fillCanvas":
+                context.globalAlpha = 1;
                 context.fillRect(0, 0, canvas.width, canvas.height);
                 break;
             case "rect":
@@ -185,12 +204,16 @@ function main() {
                 document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('lineDash').classList.remove('hidden');
                 document.getElementById('rect').classList.add('activeButton');
+                document.getElementById('opacidadSlider').classList.remove('hidden');
+                document.getElementById('opacidad').classList.remove('hidden');
                 break;
             case "fillRect":
                 resetVars();
                 resetActive();
                 isFillRect = true;
                 document.getElementById('fillRect').classList.add('activeButton');
+                document.getElementById('opacidadSlider').classList.remove('hidden');
+                document.getElementById('opacidad').classList.remove('hidden');
                 break;
             case "round":
                 resetVars();
@@ -200,12 +223,16 @@ function main() {
                 document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('lineDash').classList.remove('hidden');
                 document.getElementById('round').classList.add('activeButton');
+                document.getElementById('opacidadSlider').classList.remove('hidden');
+                document.getElementById('opacidad').classList.remove('hidden');
                 break;
             case "fillRound":
                 resetVars();
                 resetActive();
                 isFillRound = true;
                 document.getElementById('fillRound').classList.add('activeButton');
+                document.getElementById('opacidadSlider').classList.remove('hidden');
+                document.getElementById('opacidad').classList.remove('hidden');
                 break;
             case "romb":
                 resetVars();
@@ -215,12 +242,16 @@ function main() {
                 document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('lineDash').classList.remove('hidden');
                 document.getElementById('romb').classList.add('activeButton');
+                document.getElementById('opacidadSlider').classList.remove('hidden');
+                document.getElementById('opacidad').classList.remove('hidden');
                 break;
             case "fillRomb":
                 resetVars();
                 resetActive();
                 isFillRomb = true;
                 document.getElementById('fillRomb').classList.add('activeButton');
+                document.getElementById('opacidadSlider').classList.remove('hidden');
+                document.getElementById('opacidad').classList.remove('hidden');
                 break;
             case "triangle": // Triangle
                 resetVars();
@@ -230,12 +261,16 @@ function main() {
                 document.getElementById('grosor').classList.remove('hidden');
                 document.getElementById('lineDash').classList.remove('hidden');
                 document.getElementById('triangle').classList.add('activeButton');
+                document.getElementById('opacidadSlider').classList.remove('hidden');
+                document.getElementById('opacidad').classList.remove('hidden');
                 break;
             case "fillTriangle": // fillTriangle
                 resetVars();
                 resetActive();
                 isFillTriangle = true;
                 document.getElementById('fillTriangle').classList.add('activeButton');
+                document.getElementById('opacidadSlider').classList.remove('hidden');
+                document.getElementById('opacidad').classList.remove('hidden');
                 break;
             case "text":
                 resetVars();
@@ -271,6 +306,8 @@ function main() {
                 resetActive();
                 document.getElementById('image').classList.add('activeButton');
                 document.getElementById('imageLabel').classList.remove('hidden');
+                document.getElementById('opacidadSlider').classList.remove('hidden');
+                document.getElementById('opacidad').classList.remove('hidden');
                 break;
         };
     }
@@ -456,11 +493,15 @@ function main() {
     // LISTENER LINE TYPE
     lineTypePicker.addEventListener('change', setLineType, false); // Cuando cambie el valor del select nos ejecuta la funcion setLineType
 
+    // LISTENER OPACIDAD
+    opacidadSlider.addEventListener('change', setOpacidad, false);
+
     // LISTENER TEXTO
     textSlider.addEventListener('change', textSizePicker, false); // Cuando cambia el valor del input range se ejecuta la funcion widthPicker
     textSelect.addEventListener('change', selectFont, false); // Cuando cambia el valor del select se ejecuta la funcion setLineType
 
-
+    // LISTENER INVERTIR COLOR
+    invertButton.addEventListener('click', invert, false)
 
     // LISTENER DIBUJO
     canvas.addEventListener('mousedown', start, false) // Cuando el ratón está abajo (Clic mantenido) ejecutamos la funcion start 

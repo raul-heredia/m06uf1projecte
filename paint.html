@@ -73,6 +73,7 @@
                 <button type="button" id="bold" class="hidden"><i class="fas fa-bold"></i></button>
                 <button type="button" id="italic" class="hidden"><i class="fas fa-italic"></i></button>
                 <button type="button" id="image"><i class="fas fa-image"></i></button>
+                <button type="button" id="invert"><i class="fas fa-adjust"></i></button>
                 <button type="button" id="fillCanvas"><i class="fas fa-fill-drip"></i></button>
                 <label class="hidden" id="imageLabel" for="imageInput">
                     Subir Imagen
@@ -82,6 +83,8 @@
             <div id="optionals">
                 <label id="grosor">Grosor: 5</label>
                 <input type="range" min="1" max="30" value="5" id="width-slider">
+                <label id="opacidad" class="hidden">Opacidad: 1</label>
+                <input type="range" min="0" max="1" step="0.1" value="1" id="opacidadSlider" class="hidden">
                 <label for="textSize" id="labelSize" class="hidden">Tamaño Texto: 18</label>
                 <input type="range" id="textSlider" min="18" max="40" value="18" class="hidden">
                 <div id="lineDash">
