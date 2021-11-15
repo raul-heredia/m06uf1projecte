@@ -24,7 +24,7 @@
 /*Canvas*/
 
 main {
-    width: 1600px;
+    width: 1536px;
     height: 604px;
     border: 2px solid #343a40;
     margin: 0 auto;
@@ -35,8 +35,7 @@ main {
 }
 
 .panel {
-    width: 224px;
-    padding: 2px;
+    width: 160px;
     border-right: 2px solid #5e6870;
     background-color: #737e88;
     border-top-left-radius: 4px;
@@ -165,12 +164,13 @@ main {
 }
 
 .formas {
-    margin: 0 auto;
+    padding: 10px 5px 10px 13px;
     background-color: #737e88;
     border-top-left-radius: 0.5em;
 }
 
 .formas button {
+    margin: 0 auto;
     display: inline-block;
     border: 2px solid #000000;
     outline: none;
