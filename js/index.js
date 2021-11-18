@@ -6,6 +6,8 @@ function main() {
         retroceder = document.getElementById('retroceder'),
         playpause = document.getElementById('playpause'),
         avanzar = document.getElementById('avanzar');
+        muted = document.getElementById('muteVolumen');
+        volumen = document.getElementById('volumenRange');
 
 
 
@@ -32,8 +34,25 @@ function main() {
         console.log("Clic Avanzar");
         video.currentTime += 10;
     }
+    function Volumen(event){
+        video.volume= event.target.value;
+        console.log(video.volume);
+    }
+    function Mute(event){
+        if (!video.volume){
+            video.volume=0.5;
+            console.log(video.volume);
+            document.getElementById('volumenRange').value=0.5;
+        }else{
+            video.volume=0;
+            console.log(video.volume);
+            document.getElementById('volumenRange').value=0;
+        }
+    }
 
     playpause.addEventListener("click", playPause, false);
     retroceder.addEventListener("click", retrocederTiempo, false);
     avanzar.addEventListener("click", avanzarTiempo, false);
+    muted.addEventListener("click", Mute, false);
+    volumen.addEventListener("click", Volumen, false);
 }
