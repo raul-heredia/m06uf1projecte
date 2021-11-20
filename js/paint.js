@@ -16,8 +16,9 @@ function main() {
     let colorPicker = document.getElementById('colorPicker');
 
     //VARIABLES PATTERN
-    let patImg = document.getElementById('Rajola');
-    let pat1 = context.createPattern(patImg, 'repeat');
+    let patternImg1 = document.getElementById('rajola');
+    let pattern1 = context.createPattern(patternImg1, 'repeat');
+    let isPattern = false;
     //context.fillStyle = pat1;
 
     // VARIABLES GROSOR DIBUJO
@@ -38,7 +39,7 @@ function main() {
     let formas = document.getElementsByClassName('formas')[0];
     let isBrush = true, isRect = false, isFillRect = false, isRound = false,
         isFillRound = false, isRomb = false, isFillRomb = false, isText = false,
-        isBold = false, isItalic = false, isTriangle = false, isFillTriangle = false, isPattern= false;
+        isBold = false, isItalic = false, isTriangle = false, isFillTriangle = false;
 
     // VARIABLES DIBUJO
     context.strokeStyle = drawColor;
@@ -78,16 +79,17 @@ function main() {
     // Nos da el value del color al picar en cada botón (Incluido color picker)
     function colorValue(event) {
         //console.log(drawColor);
-        isPattern = false;
-        drawColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
-        fillColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
-        context.strokeStyle = drawColor; // Asignamos que el color es igual al color que hemos guardado en la varibale
-        context.fillStyle = fillColor;
-        console.log(event.target.value);
         if (event.target.value=='rajola'){
             isPattern = true;
+            context.fillStyle = pattern1;
         }
-        console.log(isPattern)
+        if(!isPattern){
+            drawColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
+            fillColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
+            context.strokeStyle = drawColor; // Asignamos que el color es igual al color que hemos guardado en la varibale
+            context.fillStyle = fillColor;
+        }
+        isPattern = false;
     }
     // Nos devuelve el color de color picker cuando este ha sido cambiado
     function colorPickerValue(event) {
@@ -153,8 +155,6 @@ function main() {
         isText = false;
         isBold = false;
         isItalic = false;
-        isPattern = false;
-
     }
 
     function resetActive() { // Eliminamos la clase de todos los botones (Aunque no existan)
@@ -376,9 +376,6 @@ function main() {
     function stop(event) {
         xFin = event.clientX - canvas.offsetLeft; // Guardamos el valor final de X
         yFin = event.clientY - canvas.offsetTop;  // Guardamos el valor final de Y
-        if (isPattern){
-            context.fillStyle = pat1;
-        }
         if (isDrawing && isBrush) { // Si soltamos el raton y isDrawing es cierto, 
             context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
             context.closePath(); // Acabamos la ruta
