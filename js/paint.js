@@ -15,6 +15,10 @@ function main() {
     let colors = document.getElementsByClassName('colors')[0];
     let colorPicker = document.getElementById('colorPicker');
 
+    //VARIABLES PATTERN
+    let patImg = document.getElementById('Rajola');
+    let pat1 = context.createPattern(patImg, 'repeat');
+    //context.fillStyle = pat1;
 
     // VARIABLES GROSOR DIBUJO
     let widthSlider = document.getElementById('width-slider');
@@ -34,7 +38,7 @@ function main() {
     let formas = document.getElementsByClassName('formas')[0];
     let isBrush = true, isRect = false, isFillRect = false, isRound = false,
         isFillRound = false, isRomb = false, isFillRomb = false, isText = false,
-        isBold = false, isItalic = false, isTriangle = false, isFillTriangle = false;
+        isBold = false, isItalic = false, isTriangle = false, isFillTriangle = false, isPattern= false;
 
     // VARIABLES DIBUJO
     context.strokeStyle = drawColor;
@@ -74,10 +78,16 @@ function main() {
     // Nos da el value del color al picar en cada botón (Incluido color picker)
     function colorValue(event) {
         //console.log(drawColor);
+        isPattern = false;
         drawColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
         fillColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
         context.strokeStyle = drawColor; // Asignamos que el color es igual al color que hemos guardado en la varibale
         context.fillStyle = fillColor;
+        console.log(event.target.value);
+        if (event.target.value=='rajola'){
+            isPattern = true;
+        }
+        console.log(isPattern)
     }
     // Nos devuelve el color de color picker cuando este ha sido cambiado
     function colorPickerValue(event) {
@@ -143,6 +153,7 @@ function main() {
         isText = false;
         isBold = false;
         isItalic = false;
+        isPattern = false;
 
     }
 
@@ -365,6 +376,9 @@ function main() {
     function stop(event) {
         xFin = event.clientX - canvas.offsetLeft; // Guardamos el valor final de X
         yFin = event.clientY - canvas.offsetTop;  // Guardamos el valor final de Y
+        if (isPattern){
+            context.fillStyle = pat1;
+        }
         if (isDrawing && isBrush) { // Si soltamos el raton y isDrawing es cierto, 
             context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
             context.closePath(); // Acabamos la ruta
@@ -376,7 +390,7 @@ function main() {
                 rectHeight = yFin - yInic; // Calculamos el alto del rectangulo restando yInic a yFin
                 context.rect(xInic, yInic, rectWidth, rectHeight) // Hacemos el rectangulo
                 if (isFillRect) { // Si hemos hecho clic en el botón de rectangulo pintado hacemos un fill
-                    context.fill();
+                    context.fill();  
                 } else if (isRect) { // Si hemos hecho clic en el botón de rectangulo vacío hacemos un stroke
                     context.stroke(); // haremos un stroke para acabar la linea, finalizaremos la ruta y pondremos la variable isDrawing en false
                 }

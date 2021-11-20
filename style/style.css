@@ -141,6 +141,11 @@ main {
     background-color: #ffffff;
 }
 
+.colors button[value="rajola"]{
+    background-image: url("../img/pattern/barcelona.png");
+    background-size: cover;
+}
+
 .lineWidth {
     padding-top: 10px
 }
