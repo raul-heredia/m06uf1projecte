@@ -145,6 +145,14 @@ main {
     background-image: url("../img/pattern/barcelona.png");
     background-size: cover;
 }
+.colors button[value="patro2"] {
+    background-image: url("../img/pattern/patron2.jpg");
+    background-size: cover;
+}
+.colors button[value="patro3"] {
+    background-image: url("../img/pattern/patro3.png");
+    background-size: cover;
+}
 
 img.hidden {
     display: none;

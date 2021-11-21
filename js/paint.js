@@ -17,7 +17,11 @@ function main() {
 
     //VARIABLES PATTERN
     let patternImg1 = document.getElementById('rajola');
+    let patternImg2 = document.getElementById('patro2');
+    let patternImg3 = document.getElementById('patro3');
     let pattern1 = context.createPattern(patternImg1, 'repeat');
+    let pattern2 = context.createPattern(patternImg2, 'repeat');
+    let pattern3 = context.createPattern(patternImg3, 'repeat');
     let isPattern = false;
     //context.fillStyle = pat1;
 
@@ -82,6 +86,14 @@ function main() {
         if (event.target.value=='rajola'){
             isPattern = true;
             context.fillStyle = pattern1;
+        }
+        if (event.target.value == 'patro2'){
+            isPattern2 = true;
+            context.fillStyle = pattern2;
+        }
+        if(event.target.value == 'patro3'){
+            isPattern = true;
+            context.fillStyle = pattern3;
         }
         if(!isPattern){
             drawColor = event.target.value; //Almacenamos el valor del color en la variable drawColor
