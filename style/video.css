@@ -4,43 +4,46 @@
 	max-width: 1280px;
 	margin: 0 auto;
 }
+
 #video-paint video {
 	width: 100%;
 	height: auto;
 }
-#video-paint #controls figcaption { 
-	background: rgba(0,0,0,0.5); 
-	padding: .5em; 
+
+#video-paint #controls figcaption {
+	background: rgba(0, 0, 0, 0.5);
+	padding: .5em;
 	color: #fff;
 	position: relative;
 	top: -50px;
 	font-size: 20px;
 }
 
-#video-paint #controls figcaption button { 
+#video-paint #controls figcaption button {
 	background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
+	background-repeat: no-repeat;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
 	margin: 0 auto;
 	padding-left: 10px;
 }
-#video-paint #controls figcaption input[type="range"] { 
+
+#video-paint #controls figcaption input[type="range"] {
 	background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
+	background-repeat: no-repeat;
+	border: none;
 	width: 100px;
 	position: absolute;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
 	margin: 0 auto;
 	margin-left: 5px;
 	margin-top: 5px;
 }
 
-#video-paint #controls figcaption button i:hover{
+#video-paint #controls figcaption button i:hover {
 	color: #0060df;
 }
