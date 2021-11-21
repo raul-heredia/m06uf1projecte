@@ -21,6 +21,14 @@
     color: #0288d1 !important;
 }
 
+
+/*Canvas*/
+#maintext {
+    margin: 0 auto;
+    width: 85%;
+    text-align: justify;
+}
+
 /*Canvas*/
 
 main {
